@@ -1,0 +1,348 @@
+fileFormatVersion: 2
+guid: 17f29e6485dd9cb4a93c94550c8a2763
+timeCreated: 1508540021
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: CarSprite_Moving_0
+    21300002: CarSprite_Moving_3
+    21300004: CarSprite_Moving_4
+    21300006: CarSprite_Moving_7
+    21300008: CarSprite_Moving_9
+    21300010: CarSprite_Moving_12
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: CarSprite_Moving_0
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 223
+        width: 92
+        height: 52
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -41, y: 26}
+        - {x: -46, y: 20}
+        - {x: -46, y: -21}
+        - {x: -37, y: -26}
+        - {x: 45, y: -26}
+        - {x: 46, y: -20}
+        - {x: 46, y: 23}
+        - {x: 42, y: 26}
+      - - {x: -27, y: -10}
+        - {x: -27, y: 10}
+        - {x: -30, y: 13}
+        - {x: -31, y: 15}
+        - {x: 8, y: 16}
+        - {x: 6, y: 17}
+        - {x: 3, y: 14}
+        - {x: 3, y: -14}
+        - {x: 6, y: -17}
+        - {x: 8, y: -16}
+        - {x: -31, y: -15}
+      - - {x: 14, y: -11}
+        - {x: 13, y: 10}
+        - {x: 22, y: 9}
+        - {x: 19, y: -14}
+      - - {x: -40, y: 12}
+        - {x: -41, y: 10}
+        - {x: -38, y: 7}
+        - {x: -38, y: -7}
+        - {x: -41, y: -10}
+        - {x: -40, y: -12}
+        - {x: -39, y: -11}
+      - - {x: 33, y: 11}
+        - {x: 38, y: 7}
+        - {x: 38, y: -5}
+        - {x: 34, y: -8}
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CarSprite_Moving_3
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 223
+        width: 113
+        height: 52
+      alignment: 9
+      pivot: {x: 0.597, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -39.5, y: 26}
+        - {x: -41.5, y: 20}
+        - {x: -41.5, y: 17}
+        - {x: -41.5, y: 19}
+        - {x: -43.5, y: 21}
+        - {x: -46.5, y: 22}
+        - {x: -56.5, y: 16}
+        - {x: -56.5, y: 8}
+        - {x: -48.5, y: 7}
+        - {x: -38.5, y: -15}
+        - {x: -36.5, y: -26}
+        - {x: 56.5, y: -26}
+        - {x: 56.5, y: 26}
+      - - {x: -16.5, y: -10}
+        - {x: -16.5, y: 10}
+        - {x: -19.5, y: 13}
+        - {x: -20.5, y: 15}
+        - {x: 18.5, y: 16}
+        - {x: 16.5, y: 17}
+        - {x: 13.5, y: 14}
+        - {x: 13.5, y: -14}
+        - {x: 16.5, y: -17}
+        - {x: 18.5, y: -16}
+        - {x: -20.5, y: -15}
+      - - {x: 24.5, y: -11}
+        - {x: 23.5, y: 10}
+        - {x: 32.5, y: 9}
+        - {x: 29.5, y: -14}
+      - - {x: -29.5, y: 12}
+        - {x: -30.5, y: 10}
+        - {x: -27.5, y: 7}
+        - {x: -27.5, y: -7}
+        - {x: -30.5, y: -10}
+        - {x: -29.5, y: -12}
+        - {x: -28.5, y: -11}
+      - - {x: 43.5, y: 11}
+        - {x: 48.5, y: 7}
+        - {x: 48.5, y: -5}
+        - {x: 44.5, y: -8}
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CarSprite_Moving_4
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 111
+        width: 4
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 2.5}
+        - {x: -2, y: -2.5}
+        - {x: 2, y: -2.5}
+        - {x: 2, y: 2.5}
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CarSprite_Moving_7
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 63
+        width: 120
+        height: 67
+      alignment: 9
+      pivot: {x: 0.615, y: 0.39}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 55, y: 20.5}
+        - {x: -34, y: 20.5}
+        - {x: -34, y: -33.5}
+        - {x: 58, y: -33.5}
+        - {x: 60, y: -26.5}
+        - {x: 60, y: 17.5}
+      - - {x: -13, y: -17.5}
+        - {x: -13, y: 2.5}
+        - {x: -16, y: 5.5}
+        - {x: -17, y: 7.5}
+        - {x: 22, y: 8.5}
+        - {x: 20, y: 9.5}
+        - {x: 17, y: 6.5}
+        - {x: 17, y: -21.5}
+        - {x: 20, y: -24.5}
+        - {x: 22, y: -23.5}
+        - {x: -17, y: -22.5}
+      - - {x: 28, y: -18.5}
+        - {x: 27, y: 2.5}
+        - {x: 36, y: 1.5}
+        - {x: 33, y: -21.5}
+      - - {x: -26, y: 4.5}
+        - {x: -27, y: 2.5}
+        - {x: -24, y: -0.5}
+        - {x: -24, y: -14.5}
+        - {x: -27, y: -17.5}
+        - {x: -26, y: -19.5}
+        - {x: -25, y: -18.5}
+      - - {x: 47, y: 3.5}
+        - {x: 52, y: -0.5}
+        - {x: 52, y: -12.5}
+        - {x: 48, y: -15.5}
+      - - {x: -32, y: 18.5}
+        - {x: -32, y: 28.5}
+        - {x: -36, y: 33.5}
+        - {x: -59, y: 33.5}
+        - {x: -60, y: 27.5}
+        - {x: -60, y: 0.5}
+        - {x: -36, y: 0.5}
+        - {x: -33, y: 2.5}
+        - {x: -33, y: 7.5}
+        - {x: -39, y: 14.5}
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CarSprite_Moving_9
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 111
+        width: 4
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 2.5}
+        - {x: -2, y: -2.5}
+        - {x: 2, y: -2.5}
+        - {x: 2, y: 2.5}
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CarSprite_Moving_12
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 63
+        width: 132
+        height: 72
+      alignment: 9
+      pivot: {x: 0.655, y: 0.36}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -15, y: 18}
+        - {x: -28, y: 10}
+        - {x: -28, y: -30}
+        - {x: -21, y: -36}
+        - {x: 63, y: -36}
+        - {x: 66, y: -33}
+        - {x: 66, y: 10}
+        - {x: 64, y: 18}
+      - - {x: -7, y: -20}
+        - {x: -7, y: 0}
+        - {x: -10, y: 3}
+        - {x: -11, y: 5}
+        - {x: 28, y: 6}
+        - {x: 26, y: 7}
+        - {x: 23, y: 4}
+        - {x: 23, y: -24}
+        - {x: 26, y: -27}
+        - {x: 28, y: -26}
+        - {x: -11, y: -25}
+      - - {x: 34, y: -21}
+        - {x: 33, y: 0}
+        - {x: 42, y: -1}
+        - {x: 39, y: -24}
+      - - {x: -20, y: 2}
+        - {x: -21, y: 0}
+        - {x: -18, y: -3}
+        - {x: -18, y: -17}
+        - {x: -21, y: -20}
+        - {x: -20, y: -22}
+        - {x: -19, y: -21}
+      - - {x: 53, y: 1}
+        - {x: 58, y: -3}
+        - {x: 58, y: -15}
+        - {x: 54, y: -18}
+      - - {x: -32, y: 33}
+        - {x: -48, y: 33}
+        - {x: -64, y: 17}
+        - {x: -64, y: -2}
+        - {x: -62, y: -4}
+        - {x: -38, y: -4}
+        - {x: -36, y: 3}
+        - {x: -30, y: 18}
+        - {x: -30, y: 32}
+      - - {x: -63, y: 19}
+        - {x: -63, y: 12}
+        - {x: -56, y: 12}
+        - {x: -56, y: 19}
+      - - {x: -66, y: 19}
+        - {x: -61, y: 19}
+        - {x: -41, y: 31}
+        - {x: -41, y: 36}
+        - {x: -62, y: 36}
+        - {x: -66, y: 35}
+      physicsShape: []
+      tessellationDetail: 0
+    outline: []
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
