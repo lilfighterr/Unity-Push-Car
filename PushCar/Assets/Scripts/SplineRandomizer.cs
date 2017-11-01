@@ -20,31 +20,9 @@ public class SplineRandomizer : MonoBehaviour {
             Vector3 deltaPos = new Vector3(Random.Range(-delta, delta), Random.Range(-delta, delta), 0);
             //splineScript.SetControlPoint(i, transform.GetChild(randomNum).localPosition + deltaPos);
             //pointList.Remove(randomNum);
-            if (i < 5)
-            {
-                if (keepStartSame)
-                {
-                    if (i != 0)
-                    {
-                        splineScript.SetControlPoint(i, transform.GetChild(i).localPosition + deltaPos);
-                    }
-                }
-                else
-                {
-                    splineScript.SetControlPoint(i, transform.GetChild(i).localPosition + deltaPos);
-                }
-            }
-            else if (i >= 5 && i < 9)
-            {
-                splineScript.SetControlPoint(i, transform.GetChild(i-1).localPosition + deltaPos);
-            }
-            else
-            {
-                if (!keepStartSame)
-                {
-                    splineScript.SetControlPoint(i, transform.GetChild(0).localPosition + deltaPos);
-                }                
-            }
+            
+            splineScript.SetControlPoint(i, transform.GetChild(i).localPosition + deltaPos);
+            
         }
 
     }

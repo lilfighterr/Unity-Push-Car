@@ -36,7 +36,7 @@ public class GrabScript : MonoBehaviour {
         }
         else
         {
-
+            //Do Nothing
         }
         velocity = (transform.position - previousPos) / Time.deltaTime;
         speed = new Vector3(Mathf.Abs(velocity.x), Mathf.Abs(velocity.y), 0);
