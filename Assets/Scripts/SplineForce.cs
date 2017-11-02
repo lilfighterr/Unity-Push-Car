@@ -18,6 +18,13 @@ public class SplineForce : MonoBehaviour
     private int lap = 0;
     private float score = 0;
 
+    public float GetProgress
+    {
+        get
+        {
+            return progress;
+        }
+    }
 
     private void Start()
     {
