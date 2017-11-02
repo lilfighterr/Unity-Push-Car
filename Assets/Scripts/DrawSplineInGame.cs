@@ -5,12 +5,14 @@ using UnityEngine;
 public class DrawSplineInGame : MonoBehaviour {
     public GameObject spline;
     public GameObject Car;
+    public bool trace = false;
 
     private BezierSpline splineScript;
     private SplineForce carScript;
     private float drawDistance = 0.1f; //Distance in progress ([0,1]) 
     private float drawDuration = 0.05f;//How long the line will be drawn for
     private int steps = 10; //# of lines to be drawn
+    
     
 
 	// Use this for initialization
@@ -36,7 +38,17 @@ public class DrawSplineInGame : MonoBehaviour {
 
         for (int i = 0; i < steps; i++)
         {
-            DrawLine(splineScript.GetPoint(start), splineScript.GetPoint(next), Color.green, drawDuration);
+            if (!trace)
+            {
+                DrawLine(splineScript.GetPoint(start), splineScript.GetPoint(next), Color.gray, drawDuration);
+            }
+            else
+            {
+                if (i % 2 == 0)
+                {
+                    DrawLine(splineScript.GetPoint(start), splineScript.GetPoint(next), Color.gray, drawDuration);
+                }
+            }
             start = next;
             next += step;
         }
