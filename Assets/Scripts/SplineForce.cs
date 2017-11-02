@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
 
 public class SplineForce : MonoBehaviour
 {
@@ -13,10 +15,11 @@ public class SplineForce : MonoBehaviour
     private Rigidbody2D rb2d;
     private SplineRandomizer randomizerScript;
     private float progress = 0, prevProgress = 0, tempProgress = 0;
-    private bool goingForward = true;
     private float velocity = 0;
-    private int lap = 0;
     private float score = 0;
+    private float lengthSum = 0;
+    private bool goingForward = true;
+    private int lap = 0;
 
     public float GetProgress
     {
@@ -93,6 +96,7 @@ public class SplineForce : MonoBehaviour
             if ((prevProgress - progress) > 0.9 && mode == SplineWalkerMode.Loop)
             {
                 lap++;
+                lengthSum += spline.SplineLength(); //total length
                 if (GameControl.instance.randomize)
                 {
                     randomizerScript.Randomize(true);
@@ -108,7 +112,7 @@ public class SplineForce : MonoBehaviour
 
     private void UpdateScore()
     {
-        score = lap * spline.SplineLength() + spline.CurrentLength(progress);
+        score = lengthSum + spline.CurrentLength(progress);
         scoreText.text = " Score \n" + score.ToString("F2");
     }
 }
