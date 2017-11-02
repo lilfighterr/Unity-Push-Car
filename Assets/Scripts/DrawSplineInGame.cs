@@ -22,7 +22,10 @@ public class DrawSplineInGame : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        DrawSpline();
+        if (GameControl.instance.drawLine)
+        {
+            DrawSpline();
+        }
 	}
 
     private void DrawSpline()
