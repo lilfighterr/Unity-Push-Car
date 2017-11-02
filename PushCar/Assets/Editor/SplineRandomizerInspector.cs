@@ -6,6 +6,7 @@ using UnityEngine;
 public class SplineRanzomizerInspector : Editor
 {
     private SplineRandomizer splineRandom;
+    private BezierSpline spline;
 
     public override void OnInspectorGUI()
     {
@@ -16,6 +17,12 @@ public class SplineRanzomizerInspector : Editor
         {
             Undo.RecordObject(splineRandom, "Randomize");
             splineRandom.Randomize();
+            EditorUtility.SetDirty(splineRandom);
+        }
+        if (GUILayout.Button("Randomize Keep Start"))
+        {
+            Undo.RecordObject(splineRandom, "Randomize Keep Start");
+            splineRandom.Randomize(true);
             EditorUtility.SetDirty(splineRandom);
         }
     }

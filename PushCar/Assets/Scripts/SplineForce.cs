@@ -18,6 +18,7 @@ public class SplineForce : MonoBehaviour
     private int lap = 0;
     private float score = 0;
 
+
     private void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
