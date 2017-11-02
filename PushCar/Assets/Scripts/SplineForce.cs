@@ -5,7 +5,6 @@ public class SplineForce : MonoBehaviour
 {
 
     public BezierSpline spline;
-    public float duration;
     public bool lookForward;
     public SplineWalkerMode mode;
     public GrabScript ball;
@@ -18,6 +17,7 @@ public class SplineForce : MonoBehaviour
     private float velocity = 0;
     private int lap = 0;
     private float score = 0;
+
 
     private void Start()
     {
@@ -86,7 +86,10 @@ public class SplineForce : MonoBehaviour
             if ((prevProgress - progress) > 0.9 && mode == SplineWalkerMode.Loop)
             {
                 lap++;
-                randomizerScript.Randomize(true);
+                if (GameControl.instance.randomize)
+                {
+                    randomizerScript.Randomize(true);
+                }
             }
         }
         if (position != transform.position) //If the position is not equal to current position, move to position

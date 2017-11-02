@@ -12,6 +12,7 @@ public class GameControl : MonoBehaviour
     public Text scoreText;
     public bool gameOver = false;
     public bool isRehab = false;
+    public bool randomize = false;
 
     private int score = 0;
 

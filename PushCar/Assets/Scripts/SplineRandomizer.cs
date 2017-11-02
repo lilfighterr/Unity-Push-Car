@@ -10,7 +10,8 @@ public class SplineRandomizer : MonoBehaviour {
     {
         splineScript = transform.gameObject.GetComponent<BezierSpline>();
         int splineCount = splineScript.ControlPointCount;
-        float delta = 1;
+        float delta = 0.75f;
+        int pointCounter = 0, nodeCounter = 0;
         List<int> pointList = new List<int>(new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9});
         
 
@@ -20,31 +21,39 @@ public class SplineRandomizer : MonoBehaviour {
             Vector3 deltaPos = new Vector3(Random.Range(-delta, delta), Random.Range(-delta, delta), 0);
             //splineScript.SetControlPoint(i, transform.GetChild(randomNum).localPosition + deltaPos);
             //pointList.Remove(randomNum);
-            if (i < 5)
+            if (pointCounter == 0)
             {
-                if (keepStartSame)
+                if (keepStartSame && (i == 0 || i == 24))
                 {
-                    if (i != 0)
+                    if (i == 24)
                     {
-                        splineScript.SetControlPoint(i, transform.GetChild(i).localPosition + deltaPos);
+                        int secondPoint = 1;
+                        Vector3 thirdPoint = splineScript.GetControlPoint(secondPoint);
+                        splineScript.SetControlPoint(secondPoint, thirdPoint);
                     }
                 }
                 else
                 {
-                    splineScript.SetControlPoint(i, transform.GetChild(i).localPosition + deltaPos);
+                    splineScript.SetControlPoint(i, transform.GetChild(nodeCounter).localPosition + deltaPos);
+                } 
+                nodeCounter++;
+            }
+            else if (pointCounter == 1)
+            {
+                splineScript.SetControlPoint(i, transform.GetChild(nodeCounter).localPosition + deltaPos);
+            }
+            else //pointCounter == 2
+            {
+                Vector3 prevPoint = splineScript.GetControlPoint(i - 1);
+                splineScript.SetControlPoint(i, prevPoint);
+                pointCounter = -1;
+                nodeCounter++;
+                if (nodeCounter > 15)
+                {
+                    nodeCounter = 0;
                 }
             }
-            else if (i >= 5 && i < 9)
-            {
-                splineScript.SetControlPoint(i, transform.GetChild(i-1).localPosition + deltaPos);
-            }
-            else
-            {
-                if (!keepStartSame)
-                {
-                    splineScript.SetControlPoint(i, transform.GetChild(0).localPosition + deltaPos);
-                }                
-            }
+            pointCounter++;
         }
 
     }

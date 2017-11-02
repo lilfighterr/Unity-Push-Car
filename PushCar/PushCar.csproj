@@ -88,6 +88,7 @@
     <Compile Include="Assets\Scripts\BezierControlPointMode.cs" />
     <Compile Include="Assets\Scripts\BezierCurve.cs" />
     <Compile Include="Assets\Scripts\BezierSpline.cs" />
+    <Compile Include="Assets\Scripts\DrawSplineInGame.cs" />
     <Compile Include="Assets\Scripts\FollowPath.cs" />
     <Compile Include="Assets\Scripts\GameControl.cs" />
     <Compile Include="Assets\Scripts\GrabScript.cs" />
