@@ -53,4 +53,12 @@ public class GameControl : MonoBehaviour
         }
     }
 
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); //Reload current scene to restart
+    }
+    public void Calibrate()
+    {
+
+    }
 }
