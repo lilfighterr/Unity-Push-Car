@@ -4,9 +4,6 @@ using UnityEngine;
 
 
 public class GrabScript : MonoBehaviour {
-    private Vector3 mousePosScreen, currentPos, previousPos;
-    private Rigidbody2D carRb2d;
-    private Vector3 robotPos;
 
     public Vector3 velocity;
     public Vector3 speed;
@@ -14,11 +11,38 @@ public class GrabScript : MonoBehaviour {
     public BezierSpline spline;
     public float xForce, yForce;
 
+    private Vector3 mousePosScreen, currentPos, previousPos;
+    private Rigidbody2D carRb2d;
+    private Vector3 robotPos;
+    private float T11 = 1, T12 = 0, T13 = 1, T21 = 0, T22 = 1, T23 = 1, T31 = 1, T32 = 1, T33 = 1;
+
     private void Start()
     {
         previousPos = transform.position;
         carRb2d = car.GetComponent<Rigidbody2D>();
         robotPos = Vector3.zero;
+    }
+
+    public void Calibrate() //Initialize
+    {
+        try
+        {
+            T11 = PlayerPrefs.GetFloat("T11");
+            T12 = PlayerPrefs.GetFloat("T12");
+            T13 = PlayerPrefs.GetFloat("T13");
+
+            T21 = PlayerPrefs.GetFloat("T21");
+            T22 = PlayerPrefs.GetFloat("T22");
+            T23 = PlayerPrefs.GetFloat("T23");
+
+            T31 = PlayerPrefs.GetFloat("T31");
+            T32 = PlayerPrefs.GetFloat("T32");
+            T33 = PlayerPrefs.GetFloat("T33");
+        }
+        catch
+        {
+            Debug.Log("Please Calibrate");
+        }
     }
 
     // Update is called once per frame
@@ -31,8 +55,7 @@ public class GrabScript : MonoBehaviour {
         }
         else if (GameControl.instance.isRehab == true && MatlabServer.instance.serverRunning == true)
         {
-            robotPos = new Vector3(MatlabServer.instance.xMove, MatlabServer.instance.yMove, 0);
-            transform.position = robotPos;
+            transform.position = CalibratedMovement();
         }
         else
         {
@@ -74,5 +97,13 @@ public class GrabScript : MonoBehaviour {
         yForce = 0;
         MatlabServer.instance.xForce = xForce;
         MatlabServer.instance.yForce = yForce;
+    }
+
+    public Vector3 CalibratedMovement()
+    {
+        float xS = MatlabServer.instance.xMove * T11 + MatlabServer.instance.yMove * T12;
+        float yS = MatlabServer.instance.xMove * T21 + MatlabServer.instance.yMove * T22;
+
+        return new Vector3(xS, yS, 0f);
     }
 }

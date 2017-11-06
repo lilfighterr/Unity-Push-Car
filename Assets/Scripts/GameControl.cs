@@ -59,6 +59,10 @@ public class GameControl : MonoBehaviour
     }
     public void Calibrate()
     {
-
+        if (GameControl.instance.isRehab)
+        {
+            MatlabServer.instance.StopThread();
+        }
+        SceneManager.LoadScene("Calibrate"); //Load scene
     }
 }

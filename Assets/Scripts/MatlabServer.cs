@@ -14,7 +14,7 @@ public class MatlabServer : MonoBehaviour {
     public float xMove, yMove = 0;
     public float xForce, yForce = 0;
     [ReadOnly] public bool serverRunning = false;
-    [ReadOnly] public string ipAddress = "142.244.63.45"; //This comp: 142.244.63.45, Localhost: 127.0.0.1   
+    [ReadOnly] public string ipAddress = "127.0.0.1"; //This comp: 142.244.63.45, Localhost: 127.0.0.1   
     [ReadOnly] public int port = 9000; 
 
     private Thread thread;
