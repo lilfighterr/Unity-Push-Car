@@ -191,6 +191,7 @@ GameObject:
   - component: {fileID: 497290322}
   - component: {fileID: 497290321}
   - component: {fileID: 497290320}
+  - component: {fileID: 497290323}
   m_Layer: 0
   m_Name: GameControl
   m_TagString: Untagged
@@ -245,6 +246,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &497290323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 497290319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb4cdc79c2c87ef4eae026b7d514ef73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  calibrationCrosshair: {fileID: 662458316}
+  doneText: {fileID: 0}
+  carObject: {fileID: 0}
 --- !u!1 &507975221
 GameObject:
   m_ObjectHideFlags: 0
@@ -453,9 +468,9 @@ GameObject:
   - component: {fileID: 802549592}
   - component: {fileID: 802549591}
   - component: {fileID: 802549590}
-  - component: {fileID: 802549589}
   - component: {fileID: 802549588}
   - component: {fileID: 802549587}
+  - component: {fileID: 802549589}
   m_Layer: 0
   m_Name: Car
   m_TagString: Untagged
@@ -469,16 +484,11 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 802549586}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 928f318eec5cf7f40b6e7c960c34f8a3, type: 3}
+  m_Script: {fileID: 11500000, guid: 41e2744d2a5a986488948f10666f88b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spline: {fileID: 0}
-  lookForward: 1
-  mode: 1
-  ball: {fileID: 507975224}
-  scoreText: {fileID: 0}
 --- !u!95 &802549588
 Animator:
   serializedVersion: 3
@@ -502,15 +512,12 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 802549586}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 541a76f9c03874323b5154b14ac00427, type: 3}
+  m_Script: {fileID: 11500000, guid: 11bf78a4acca450409fa819698b9c57a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spline: {fileID: 0}
-  duration: 20
-  lookForward: 1
-  mode: 0
+  ball: {fileID: 507975224}
 --- !u!60 &802549590
 PolygonCollider2D:
   m_ObjectHideFlags: 0

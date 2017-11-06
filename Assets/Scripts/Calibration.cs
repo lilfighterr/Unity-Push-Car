@@ -13,7 +13,6 @@ public class Calibration : MonoBehaviour
     public static Calibration instance; // Allows easy access from other scripts. They just have to do GameControl.instance.something
     public GameObject calibrationCrosshair;
     public GameObject doneText;
-    public GameObject carObject;
 
     private int spacePressed = 0;
     private GrabScript carScript;
@@ -22,7 +21,7 @@ public class Calibration : MonoBehaviour
     
     private void Start()
     {
-        carScript = carObject.GetComponent<GrabScript>();
+        calibrationCrosshair.transform.position = new Vector3(-4f, -2f, 0);
     }
 
     // Update is called once per frame
@@ -50,6 +49,7 @@ public class Calibration : MonoBehaviour
                     Calibrate();
                     //carScript.Calibrate();
                     doneText.SetActive(true);
+
                     break;
                 default:
                     if (GameControl.instance.isRehab)
@@ -65,7 +65,24 @@ public class Calibration : MonoBehaviour
 
     private void Calibrate()
     {
-        Matrix<double> robotMatrix = 
+        /*
+         double[,] screen = { {aS.x, bS.x, cS.x },
+                              {aS.y, bS.y, cS.y },
+                              {1, 1, 1 } };
+         double[,] robot = { {aR.x, bR.x, cR.x },
+                             {aR.y, bR.y, cR.y },
+                             {1, 1, 1 } };
+        */
+        double[,] screen = { {12, 17, 16 },
+                             {10, 13, 6 },
+                             {1, 1, 1 } };
+        double[,] robot = { {-24.4165, 26.8797, 14.0124},
+                            {-12.3001, -43.5058, 21.4809 },
+                            {1, 1, 1 } };
+
+        Matrix<double> robotMatrix = Matrix<double>.Build.DenseOfArray(robot);
+        Matrix<double> screenMatrix = Matrix<double>.Build.DenseOfArray(screen);
+        Matrix<double> transformMatrix = robotMatrix * screenMatrix.Inverse();
         /*PlayerPrefs.SetFloat("rangeRehab", (float)rangeRehab);
         PlayerPrefs.SetFloat("rangeScreen", (float)rangeScreen);
         PlayerPrefs.SetFloat("rehabTop", (float)rehabTop);
