@@ -18,6 +18,7 @@ public class GrabScript : MonoBehaviour {
 
     private void Start()
     {
+        Calibrate();
         previousPos = transform.position;
         carRb2d = car.GetComponent<Rigidbody2D>();
         robotPos = Vector3.zero;

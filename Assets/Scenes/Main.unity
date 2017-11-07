@@ -1290,7 +1290,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreText: {fileID: 828792916}
   gameOver: 0
-  isRehab: 0
+  isRehab: 1
   randomize: 1
   drawLine: 1
 --- !u!1 &1725903295
