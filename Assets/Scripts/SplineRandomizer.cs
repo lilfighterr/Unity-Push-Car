@@ -10,7 +10,7 @@ public class SplineRandomizer : MonoBehaviour {
     {
         splineScript = transform.gameObject.GetComponent<BezierSpline>();
         int splineCount = splineScript.ControlPointCount;
-        float delta = 0.75f;
+        float delta = 0.4f;
         int pointCounter = 0, nodeCounter = 0;        
 
         for (int i = 0; i < splineCount; i++) //For every point of the spline

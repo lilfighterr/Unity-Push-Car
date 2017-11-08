@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DrawSplineInGame : MonoBehaviour {
     public GameObject spline;
@@ -12,6 +13,7 @@ public class DrawSplineInGame : MonoBehaviour {
     private float drawDistance = 0.1f; //Distance in progress ([0,1]) 
     private float drawDuration = 0.05f;//How long the line will be drawn for
     private int steps = 10; //# of lines to be drawn
+    private bool inSettings;
     
     
 
