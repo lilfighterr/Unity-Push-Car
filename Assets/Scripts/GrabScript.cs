@@ -15,6 +15,7 @@ public class GrabScript : MonoBehaviour {
     private Rigidbody2D carRb2d;
     private Vector3 robotPos;
     private float T11 = 1, T12 = 0, T13 = 1, T21 = 0, T22 = 1, T23 = 1, T31 = 1, T32 = 1, T33 = 1;
+    private bool forceFeedback;
 
     private void Start()
     {
@@ -22,6 +23,7 @@ public class GrabScript : MonoBehaviour {
         previousPos = transform.position;
         carRb2d = car.GetComponent<Rigidbody2D>();
         robotPos = Vector3.zero;
+        forceFeedback = GameControl.instance.forceFeedback;
     }
 
     public void Calibrate() //Initialize
@@ -85,8 +87,16 @@ public class GrabScript : MonoBehaviour {
     {
         //While in contact with ball
         Vector3 contactNormal = collision.contacts[0].normal.normalized; //Gives unit vector direction normal to point of contact
-        xForce = contactNormal.x * carRb2d.mass; //Force experienced by player from contact (z axis)
-        yForce = contactNormal.y * carRb2d.mass; //Force experienced by player from contact (x axis)
+        if (forceFeedback)
+        {
+            xForce = contactNormal.x * carRb2d.mass; //Force experienced by player from contact (z axis)
+            yForce = contactNormal.y * carRb2d.mass; //Force experienced by player from contact (x axis)
+        }
+        else
+        {
+            xForce = 0;
+            yForce = 0;
+        }
         MatlabServer.instance.xForce = xForce;
         MatlabServer.instance.yForce = yForce;
 

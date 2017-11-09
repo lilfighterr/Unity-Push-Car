@@ -10,13 +10,16 @@ public class GameControl : MonoBehaviour
     public static GameControl instance; // Allows easy access from other scripts. They just have to do GameControl.instance.something
 
     public Text scoreText;
+    public GameObject calibrateButton;
+    public GameObject car;
     public bool gameOver = false;
     public bool isRehab = false;
     public bool randomize = false;
     public bool drawLine = false;
+    public bool forceFeedback = false;
 
     private int score = 0;
-
+    private SplineForce carScript;
 
     // Use this for initialization
     void Awake()
@@ -30,6 +33,10 @@ public class GameControl : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        isRehab = PlayerPrefs.GetInt("RehabToggle", 1) == 1 ? true : false;
+        randomize = PlayerPrefs.GetInt("RandomizeToggle", 1) == 1 ? true : false;
+        forceFeedback = PlayerPrefs.GetInt("ForceToggle", 1) == 1 ? true : false;
+        calibrateButton.SetActive(isRehab);
     }
 
     private void Start()
@@ -38,6 +45,7 @@ public class GameControl : MonoBehaviour
         {
             MatlabServer.instance.StartThread();
         }
+        carScript = car.GetComponent<SplineForce>();
     }
 
     // Update is called once per frame
@@ -55,6 +63,12 @@ public class GameControl : MonoBehaviour
 
     public void Restart()
     {
+        //carScript.SetProgress(0);
+        //carScript.ResetScore();
+        if (isRehab)
+        {
+            MatlabServer.instance.StopThread();
+        }
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); //Reload current scene to restart
     }
     public void Calibrate()

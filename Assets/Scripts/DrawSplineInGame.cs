@@ -9,10 +9,12 @@ public class DrawSplineInGame : MonoBehaviour {
     public bool trace = false;
 
     private BezierSpline splineScript;
-    private SplineForce carScript;
+    private SplineForce carScriptForce;
+    private SplineWalker carScriptWalker;
     private float drawDistance = 0.1f; //Distance in progress ([0,1]) 
     private float drawDuration = 0.05f;//How long the line will be drawn for
-    private int steps = 10; //# of lines to be drawn
+    private int steps = 100; //# of lines to be drawn
+    private int drawLine = 1;
     private bool inSettings;
     
     
@@ -21,20 +23,44 @@ public class DrawSplineInGame : MonoBehaviour {
 	void Start () {
         //Grab scripts of spline & car
         splineScript = spline.GetComponent<BezierSpline>();
-        carScript = Car.GetComponent<SplineForce>();
+        
+        if (SceneManager.GetActiveScene().name == "Settings")
+        {
+            carScriptWalker = Car.GetComponent<SplineWalker>();
+            inSettings = true;
+        }
+        else
+        {
+            carScriptForce = Car.GetComponent<SplineForce>();
+            inSettings = false;
+        }
+
+        drawLine = PlayerPrefs.GetInt("ShowLineToggle", 1);
+        drawDistance = PlayerPrefs.GetFloat("DrawDistance", 0.1f);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (GameControl.instance.drawLine)
+        if (drawLine == 1)
         {
             DrawSpline();
         }
 	}
 
+    public void ToggleLine(bool value) //To be used by toggle in settings
+    {
+        drawLine = value ? 1 : 0;
+    }
+
+    public void ChangeDrawDistance(float value) //To be used by toggle in settings
+    {
+        drawDistance = value;
+    }
+
     private void DrawSpline()
     {
-        float start = carScript.GetProgress; //Start point
+        
+        float start = (inSettings) ? carScriptWalker.GetProgress :carScriptForce.GetProgress; //Start point
         float step = drawDistance / steps; //Size of step increment
         float next = start + step; //next point to draw to
 
@@ -64,9 +90,11 @@ public class DrawSplineInGame : MonoBehaviour {
         myLine.AddComponent<LineRenderer>();
         LineRenderer lr = myLine.GetComponent<LineRenderer>();
         lr.sortingLayerName = "Foreground";
-        lr.material = new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
-        lr.SetColors(color, color);
-        lr.SetWidth(0.1f, 0.1f);
+        lr.material = new Material(Shader.Find("Sprites/Default"));
+        lr.startColor = color;
+        lr.endColor = color;
+        lr.startWidth = 0.1f;
+        lr.endWidth = 0.1f;
         lr.SetPosition(0, start);
         lr.SetPosition(1, end);
         GameObject.Destroy(myLine, duration);

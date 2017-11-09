@@ -20,6 +20,8 @@ public class LoadScenes : MonoBehaviour {
 
     public void LoadMenu()
     {
+ 
+        MatlabServer.instance.StopThread();
         SceneManager.LoadScene("Menu");
     }
 }

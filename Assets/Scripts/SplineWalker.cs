@@ -46,4 +46,12 @@ public class SplineWalker : MonoBehaviour {
             transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
         }
 	}
+
+    public float GetProgress
+    {
+        get
+        {
+            return progress;
+        }
+    }
 }

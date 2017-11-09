@@ -22,12 +22,23 @@ public class SplineForce : MonoBehaviour
     private bool goingForward = true;
     private int lap = 0;
 
+
     public float GetProgress
     {
         get
         {
             return progress;
         }
+    }
+
+    public void SetProgress(float value)
+    {
+        progress = value;
+    }
+
+    public void ResetScore()
+    {
+        lengthSum = 0;
     }
 
     private void Start()
