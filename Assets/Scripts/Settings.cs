@@ -14,9 +14,19 @@ public class Settings : MonoBehaviour {
     public GameObject showLineToggle;
     public GameObject evaluationType;
     public GameObject calibrateButton;
+    public GameObject rehabDropDown;
+    public GameObject evaluationDropDown;
+    public GameObject timeInput;
+    public GameObject lengthInput;
+    public GameObject errorText;
 
     private float drawDistance;
     private bool isRehab;
+    private int evalType;
+    private Dropdown rehabDropScript;
+    private Dropdown evalDropScript;
+    private InputField timeScript;
+    private InputField lengthScript;
 
     private void Start()
     {
@@ -29,6 +39,24 @@ public class Settings : MonoBehaviour {
         rehabToggle.GetComponent<Toggle>().isOn = isRehab;
         calibrateButton.GetComponent<Button>().interactable = isRehab;
         forceToggle.GetComponent<Toggle>().interactable = isRehab;
+
+        rehabDropScript = rehabDropDown.GetComponent<Dropdown>();
+        rehabDropScript.value = PlayerPrefs.GetInt("IPAddressIndex", 0);
+
+        evalDropScript = evaluationDropDown.GetComponent<Dropdown>();
+        evalDropScript.value = PlayerPrefs.GetInt("EvalType", 0);
+        timeScript = timeInput.GetComponent<InputField>();
+        lengthScript = lengthInput.GetComponent<InputField>();
+        if (evalDropScript.value == 0)
+        {
+            lengthScript.text = PlayerPrefs.GetFloat("Length", 40).ToString("F2");
+            lengthInput.SetActive(true);
+        }
+        else
+        {
+            timeScript.text = PlayerPrefs.GetFloat("Time", 30).ToString("F2");
+            timeInput.SetActive(true);
+        }
     }
 
     public void ForceToggle(bool value)
@@ -62,6 +90,7 @@ public class Settings : MonoBehaviour {
         int isOn = value ? 1 : 0;
         calibrateButton.GetComponent<Button>().interactable = value;
         forceToggle.GetComponent<Toggle>().interactable = value;
+        rehabDropDown.GetComponent<Dropdown>().interactable = value;
         PlayerPrefs.SetInt("RehabToggle", isOn);
     }
 
@@ -71,9 +100,77 @@ public class Settings : MonoBehaviour {
         lineValue.text = value.ToString("F2");
     }
 
+    public void IpDropdown(int value)
+    {
+        string chosenOption = rehabDropScript.captionText.text;
+        PlayerPrefs.SetString("IPAddress", chosenOption);
+        PlayerPrefs.SetInt("IPAddressIndex", value);
+    }
+
+    public void EvalDropDown(int value)
+    {
+        if (value == 0) //length
+        {
+            timeInput.SetActive(false);
+            lengthInput.SetActive(true);
+        }
+        else //time
+        {
+            timeInput.SetActive(true);
+            lengthInput.SetActive(false);
+        }
+        evalType = value;
+        PlayerPrefs.SetInt("EvalType", value);
+    }
+
     public void LoadMenu()
     {
         PlayerPrefs.SetFloat("DrawDistance", drawDistance);
-        SceneManager.LoadScene("Menu");
+        if (InputFieldChecks())
+        {
+            SceneManager.LoadScene("Menu");
+        }
+    }
+
+    public void LoadCalibrate()
+    {
+        PlayerPrefs.SetFloat("DrawDistance", drawDistance);
+        if (InputFieldChecks())
+        {
+            SceneManager.LoadScene("Calibrate");
+        }
+
+    }
+
+    private bool InputFieldChecks()
+    {
+        bool result;
+        if (evalType == 0) //fixed length
+        {
+            float length;
+            result = float.TryParse(lengthScript.text, out length);
+            if (result)
+            {
+                PlayerPrefs.SetFloat("Length", length);
+            }
+            else
+            {
+                errorText.SetActive(true);
+            }
+        }
+        else //fixed time
+        {
+            float time;
+            result = float.TryParse(timeScript.text, out time);
+            if (result)
+            {
+                PlayerPrefs.SetFloat("Time", time);
+            }
+            else
+            {
+                errorText.SetActive(true);
+            }
+        }
+        return result;
     }
 }

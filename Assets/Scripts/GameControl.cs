@@ -36,7 +36,7 @@ public class GameControl : MonoBehaviour
         isRehab = PlayerPrefs.GetInt("RehabToggle", 1) == 1 ? true : false;
         randomize = PlayerPrefs.GetInt("RandomizeToggle", 1) == 1 ? true : false;
         forceFeedback = PlayerPrefs.GetInt("ForceToggle", 1) == 1 ? true : false;
-        calibrateButton.SetActive(isRehab);
+        if (SceneManager.GetActiveScene().name == "Main") calibrateButton.SetActive(isRehab);
     }
 
     private void Start()
@@ -45,7 +45,7 @@ public class GameControl : MonoBehaviour
         {
             MatlabServer.instance.StartThread();
         }
-        carScript = car.GetComponent<SplineForce>();
+        //carScript = car.GetComponent<SplineForce>();
     }
 
     // Update is called once per frame

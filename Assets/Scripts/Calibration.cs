@@ -56,15 +56,24 @@ public class Calibration : MonoBehaviour
 
                     break;
                 default:
-                    if (GameControl.instance.isRehab)
+                    /*if (GameControl.instance.isRehab)
                     {
                         MatlabServer.instance.StopThread();
                     }
-                    SceneManager.LoadScene("Main");
+                    SceneManager.LoadScene("Main");*/
                     break;
             }
         }
 
+    }
+
+    public void Recalibrate()
+    {
+        calibrationCrosshair.SetActive(true);
+        doneText.SetActive(false);
+        instructionsText.SetActive(true);
+        spacePressed = 0;
+        calibrationCrosshair.transform.position = new Vector3(-4f, -2f, 0);
     }
 
     private void Calibrate()
@@ -76,13 +85,6 @@ public class Calibration : MonoBehaviour
          float[,] robot = { {aR.x, bR.x, cR.x },
                              {aR.y, bR.y, cR.y },
                              {1, 1, 1 } };
-        
-        /*double[,] screen = { {12, 17, 16 },
-                             {10, 13, 6 },
-                             {1, 1, 1 } };
-        double[,] robot = { {-24.4165, 26.8797, 14.0124},
-                            {-12.3001, -43.5058, 21.4809 },
-                            {1, 1, 1 } };*/
 
         Matrix<float> robotMatrix = Matrix<float>.Build.DenseOfArray(robot);
         Matrix<float> screenMatrix = Matrix<float>.Build.DenseOfArray(screen);
@@ -101,5 +103,6 @@ public class Calibration : MonoBehaviour
         PlayerPrefs.SetFloat("T32", transformMatrix[2, 1]);
         PlayerPrefs.SetFloat("T33", transformMatrix[2, 2]);
     }
+
 
 }

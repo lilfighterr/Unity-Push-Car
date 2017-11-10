@@ -7,6 +7,17 @@ public class LoadScenes : MonoBehaviour {
 
     public void LoadGame()
     {
+        try
+        {
+            if (GameControl.instance.isRehab)
+            {
+                MatlabServer.instance.StopThread();
+            }
+        }
+        catch
+        {
+            SceneManager.LoadScene("Main"); //Load scene
+        }
         SceneManager.LoadScene("Main"); //Load scene
     }
     public void LoadSettings()
@@ -20,8 +31,15 @@ public class LoadScenes : MonoBehaviour {
 
     public void LoadMenu()
     {
- 
-        MatlabServer.instance.StopThread();
+        if (GameControl.instance.isRehab)
+        {
+            MatlabServer.instance.StopThread();
+        }
         SceneManager.LoadScene("Menu");
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 }
