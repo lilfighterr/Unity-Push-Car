@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 
 public class LoadScenes : MonoBehaviour {
 
@@ -40,6 +41,7 @@ public class LoadScenes : MonoBehaviour {
 
     public void Quit()
     {
+        if (!Application.isEditor) System.Diagnostics.Process.GetCurrentProcess().Kill();
         Application.Quit();
     }
 }

@@ -30,7 +30,7 @@ public class Settings : MonoBehaviour {
 
     private void Start()
     {
-        isRehab = PlayerPrefs.GetInt("RehabToggle", 1) == 1 ? true : false;
+        isRehab = PlayerPrefs.GetInt("RehabToggle", 0) == 1 ? true : false;
         slider.GetComponent<Slider>().value = PlayerPrefs.GetFloat("DrawDistance", 0.1f);
         randomizeToggle.GetComponent<Toggle>().isOn = PlayerPrefs.GetInt("RandomizeToggle", 1) == 1 ? true : false;
         showLineToggle.GetComponent<Toggle>().isOn = PlayerPrefs.GetInt("ShowLineToggle", 1) == 1 ? true : false;

@@ -28,15 +28,16 @@ public class GameControl : MonoBehaviour
         if (instance == null) //If no game control found
         {
             instance = this; //Then this is the instance of the game control
+            isRehab = PlayerPrefs.GetInt("RehabToggle", 0) == 1 ? true : false;
+            randomize = PlayerPrefs.GetInt("RandomizeToggle", 1) == 1 ? true : false;
+            forceFeedback = PlayerPrefs.GetInt("ForceToggle", 1) == 1 ? true : false;
+            if (SceneManager.GetActiveScene().name == "Main") calibrateButton.SetActive(isRehab);
+            Debug.Log("IsRehab? " + isRehab);
         }
         else if (instance != this) //If the game object finds that instance is already on another game object, then this destroys itself as it's not needed
         {
             Destroy(gameObject);
         }
-        isRehab = PlayerPrefs.GetInt("RehabToggle", 1) == 1 ? true : false;
-        randomize = PlayerPrefs.GetInt("RandomizeToggle", 1) == 1 ? true : false;
-        forceFeedback = PlayerPrefs.GetInt("ForceToggle", 1) == 1 ? true : false;
-        if (SceneManager.GetActiveScene().name == "Main") calibrateButton.SetActive(isRehab);
     }
 
     private void Start()
