@@ -17,13 +17,13 @@ public class LoadScenes : MonoBehaviour {
         }
         catch
         {
-            SceneManager.LoadScene("Main"); //Load scene
+            //SceneManager.LoadScene("Main");
         }
-        SceneManager.LoadScene("Main"); //Load scene
+        SceneManager.LoadScene("Main"); 
     }
     public void LoadSettings()
     {
-        SceneManager.LoadScene("Settings"); //Load scene
+        SceneManager.LoadScene("Settings");
     }
     public void LoadCalibrate()
     {

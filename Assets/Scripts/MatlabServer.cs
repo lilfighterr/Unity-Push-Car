@@ -73,23 +73,20 @@ public class MatlabServer : MonoBehaviour {
         byte[] dataSend = new byte[24]; //Send Collision Status, X, Y
         IEnumerable<byte> dataSendLINQ = new byte[24]; //Initialize LINQ for easy concatenation later for sending
         
-            //Create IP End point, where I want to connect (Local IP/Port)
-            IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(ipAddress), port); 
+        //Create IP End point, where I want to connect (Local IP/Port)
+        IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(ipAddress), port); 
         //Create UDP Socket
         newsock = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
         //Bind to ip. Server waits for a client at specified ip & port. 
-        Debug.Log("About to Connect");
-        Debug.Log(newsock);
         try
         {
             newsock.Bind(ipep);
-            Debug.Log("Bound");
         }
         catch (Exception e)
         {
             Debug.Log("Winsock Error: " + e.ToString());
         }
-        Debug.Log("Connecting to IP: "+ ipAddress + " Port: "+ port +" Waiting for a client...");
+        //Debug.Log("Connecting to IP: "+ ipAddress + " Port: "+ port +" Waiting for a client...");
 
         //Get IP of client
         IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);

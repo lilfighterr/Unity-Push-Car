@@ -25,7 +25,7 @@ public class GameControl : MonoBehaviour
     public int evalType = 0;
 
     private SplineForce carScript;
-    private float timeLeft = 4;
+    private float timeLeft = 4.5f;
     private float viewedTime;
     private float timeElapsed = 0;
     private float goal;
@@ -46,7 +46,6 @@ public class GameControl : MonoBehaviour
 
             goal = (evalType == 0) ? PlayerPrefs.GetFloat("Length", 40f) : PlayerPrefs.GetFloat("Time", 30f);
             if (sceneIndex == SceneName.Main) calibrateButton.SetActive(isRehab);
-            Debug.Log("IsRehab? " + isRehab);
         }
         else if (instance != this) //If the game object finds that instance is already on another game object, then this destroys itself as it's not needed
         {
@@ -66,10 +65,6 @@ public class GameControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameOver == true && Input.GetMouseButtonDown(0))
-        {
-            Debug.Log("GameOver!");
-        }
         
         if (sceneIndex == SceneName.Main && !gameOver)
         {

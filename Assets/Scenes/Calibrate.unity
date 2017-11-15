@@ -213,6 +213,7 @@ MonoBehaviour:
   scoreText: {fileID: 0}
   countdownText: {fileID: 0}
   timeText: {fileID: 0}
+  gameOverText: {fileID: 0}
   calibrateButton: {fileID: 0}
   car: {fileID: 802549586}
   gameOver: 0
@@ -552,7 +553,6 @@ GameObject:
   - component: {fileID: 802549591}
   - component: {fileID: 802549590}
   - component: {fileID: 802549588}
-  - component: {fileID: 802549587}
   - component: {fileID: 802549589}
   m_Layer: 0
   m_Name: Car
@@ -561,17 +561,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &802549587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 802549586}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41e2744d2a5a986488948f10666f88b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &802549588
 Animator:
   serializedVersion: 3

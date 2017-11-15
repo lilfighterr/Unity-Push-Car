@@ -134,9 +134,7 @@ public class SplineForce : MonoBehaviour
         Vector3 position = spline.GetPoint(progress); // Finds the location on the spline t is
         if (goingForward)
         {
-            //progress += Time.deltaTime / duration;
-            //Debug.Log(prevProgress - progress);
-            if ((prevProgress - progress) > 0.9 && mode == SplineWalkerMode.Loop)
+            if ((prevProgress - progress) > 0.9 && mode == SplineWalkerMode.Loop) //If there's a big jump in progress (going from current loop to the next)
             {
                 lap++;
                 lengthSum += spline.SplineLength(); //total length

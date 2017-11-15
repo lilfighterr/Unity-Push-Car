@@ -56,11 +56,7 @@ public class Calibration : MonoBehaviour
 
                     break;
                 default:
-                    /*if (GameControl.instance.isRehab)
-                    {
-                        MatlabServer.instance.StopThread();
-                    }
-                    SceneManager.LoadScene("Main");*/
+                    //Do nothing
                     break;
             }
         }
