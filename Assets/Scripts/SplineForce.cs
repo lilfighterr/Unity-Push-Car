@@ -21,6 +21,7 @@ public class SplineForce : MonoBehaviour
     private float lengthSum = 0;
     private bool goingForward = true;
     private int lap = 0;
+    private Vector3 currentPosition;
 
 
     public float GetProgress
@@ -36,6 +37,27 @@ public class SplineForce : MonoBehaviour
         progress = value;
     }
 
+    public void SetCurrentPosition(Vector3 value)
+    {
+        currentPosition = value;
+    }
+
+    public Vector3 GetCurrentPosition
+    {
+        get
+        {
+            return transform.localPosition;
+        }
+    }
+
+    public float GetScore
+    {
+        get
+        {
+            return score;
+        }
+    }
+
     public void ResetScore()
     {
         lengthSum = 0;
@@ -46,13 +68,22 @@ public class SplineForce : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         rb2d.velocity = Vector2.zero;
         transform.localPosition = spline.GetPoint(0);
+        currentPosition = transform.localPosition;
         randomizerScript = spline.GetComponent<SplineRandomizer>();
     }
 
     private void Update()
     {
         //Move method
-        MoveBySnappingToCurve();
+        if (!GameControl.instance.gameStart || GameControl.instance.gameOver) //Prevents car from moving during countdown or gameover
+        {
+            transform.localPosition = currentPosition;
+        }
+        else
+        {
+            MoveBySnappingToCurve();
+        }
+        
         UpdateScore();
         CarRotation();
     }
@@ -99,7 +130,7 @@ public class SplineForce : MonoBehaviour
     private void MoveBySnappingToCurve()
     {
         //Moves the sprite to position
-        progress = spline.ClosestTimeOnBezier(transform.position); //Finds at what point t [0,1] the car is at
+        progress = spline.ClosestTimeOnBezier(transform.position); //Finds at what point t [0,1] the car is at 
         Vector3 position = spline.GetPoint(progress); // Finds the location on the spline t is
         if (goingForward)
         {
