@@ -15,6 +15,7 @@ public class GameControl : MonoBehaviour
     public Text gameOverText;
     public GameObject calibrateButton;
     public GameObject car;
+    public SpriteRenderer blinker;
     public bool gameOver = false;
     public bool isRehab = false;
     public bool randomize = false;
@@ -23,12 +24,15 @@ public class GameControl : MonoBehaviour
     public bool gameStart = false;
     public SceneName sceneIndex;
     public int evalType = 0;
+    public float blinkTimerOn = 1f;
+    public float blinkTimerOff = 1f;
 
     private SplineForce carScript;
     private float timeLeft = 4.5f;
     private float viewedTime;
     private float timeElapsed = 0;
     private float goal;
+    private float blinkerTime;
     
 
     // Use this for initialization
@@ -46,6 +50,7 @@ public class GameControl : MonoBehaviour
 
             goal = (evalType == 0) ? PlayerPrefs.GetFloat("Length", 40f) : PlayerPrefs.GetFloat("Time", 30f);
             if (sceneIndex == SceneName.Main) calibrateButton.SetActive(isRehab);
+            blinkerTime = blinkTimerOn;
         }
         else if (instance != this) //If the game object finds that instance is already on another game object, then this destroys itself as it's not needed
         {
@@ -89,7 +94,18 @@ public class GameControl : MonoBehaviour
             }
             else //When game starts
             {
-                timeElapsed += Time.deltaTime;
+                blinkerTime -= Time.deltaTime; //For blinker
+                if (blinkerTime < 0 && blinker.enabled)
+                {
+                    blinker.enabled = false;
+                    blinkerTime = blinkTimerOff;
+                }
+                else if (blinkerTime < 0 && !blinker.enabled)
+                {
+                    blinker.enabled = true;
+                    blinkerTime = blinkTimerOn;
+                }
+                timeElapsed += Time.deltaTime; //For time score
                 timeText.text = "Time \n" + timeElapsed.ToString("F1");
             }
 
@@ -145,4 +161,5 @@ public class GameControl : MonoBehaviour
         car.GetComponent<Rigidbody2D>().velocity = Vector2.zero; //Remove any velocity
         gameOverText.enabled = true;
     }
+
 }
