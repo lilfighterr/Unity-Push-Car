@@ -10,6 +10,7 @@ public class GrabScript : MonoBehaviour {
     public GameObject car;
     public BezierSpline spline;
     public float xForce, yForce;
+    public float collisionStatus;
 
     private Vector3 mousePosScreen, currentPos, previousPos;
     private Rigidbody2D carRb2d;
@@ -97,6 +98,7 @@ public class GrabScript : MonoBehaviour {
             xForce = 0;
             yForce = 0;
         }
+        MatlabServer.instance.collisionStatus = 1f;
         MatlabServer.instance.xForce = xForce;
         MatlabServer.instance.yForce = yForce;
 
@@ -106,6 +108,7 @@ public class GrabScript : MonoBehaviour {
     {
         xForce = 0;
         yForce = 0;
+        MatlabServer.instance.collisionStatus = 0f;
         MatlabServer.instance.xForce = xForce;
         MatlabServer.instance.yForce = yForce;
     }

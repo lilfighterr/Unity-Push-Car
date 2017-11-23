@@ -22,6 +22,7 @@ public class SplineForce : MonoBehaviour
     private bool goingForward = true;
     private int lap = 0;
     private Vector3 currentPosition;
+    private bool goingBackwards = false;
 
 
     public float GetProgress
@@ -75,7 +76,7 @@ public class SplineForce : MonoBehaviour
     private void Update()
     {
         //Move method
-        if (!GameControl.instance.gameStart || GameControl.instance.gameOver) //Prevents car from moving during countdown or gameover
+        if (!GameControl.instance.gameStart || GameControl.instance.gameOver || goingBackwards) //Prevents car from moving during countdown or gameover
         {
             transform.localPosition = currentPosition;
         }
@@ -83,7 +84,7 @@ public class SplineForce : MonoBehaviour
         {
             MoveBySnappingToCurve();
         }
-        
+
         UpdateScore();
         CarRotation();
     }
@@ -93,6 +94,11 @@ public class SplineForce : MonoBehaviour
         Vector3 contactNormal = collision.contacts[0].normal.normalized; //Gives unit vector direction normal to point of contact
         float dotProduct = Vector3.Dot(contactNormal, spline.GetDirection(progress));
 
+        if (!goingBackwards)
+        {
+            currentPosition = transform.localPosition;
+        }
+        goingBackwards = (dotProduct < 0) ? true : false;
         //Debug.DrawRay(spline.GetPoint(progress), spline.GetDirection(progress)*dotProduct, Color.blue, 2, true);
         //Debug.Log(collision.relativeVelocity.magnitude); 
     }
@@ -104,14 +110,15 @@ public class SplineForce : MonoBehaviour
         //Vector3 contactNormal = collision.contacts[0].normal.normalized; //Gives unit vector direction normal to point of contact
         //float dotProduct = Vector3.Dot(contactNormal, spline.GetDirection(progress));
 
-        //rb2d.velocity = dotProduct*spline.GetDirection(progress);
+        //Vector3 projection = dotProduct*spline.GetDirection(progress);
+
         //Vector3 force = ball.speed.magnitude*spline.GetDirection(progress)*dotProduct;
         Vector3 force = Vector3.Dot(ball.velocity, spline.GetDirection(progress))*spline.GetDirection(progress);
 
         //Debug.Log("direction: "+spline.GetDirection(progress)*dotProduct+"Force: "+force);
         rb2d.AddForce(force, ForceMode2D.Force);
 
-        //Debug.DrawRay(spline.GetPoint(progress), spline.GetDirection(progress) * dotProduct, Color.blue, 2, true);
+        //Debug.DrawRay(spline.GetPoint(progress), projection, Color.blue, 2, true);
 
     }
 
@@ -132,16 +139,14 @@ public class SplineForce : MonoBehaviour
         //Moves the sprite to position
         progress = spline.ClosestTimeOnBezier(transform.position); //Finds at what point t [0,1] the car is at 
         Vector3 position = spline.GetPoint(progress); // Finds the location on the spline t is
-        if (goingForward)
+    
+        if ((prevProgress - progress) > 0.9 && mode == SplineWalkerMode.Loop) //If there's a big jump in progress (going from current loop to the next)
         {
-            if ((prevProgress - progress) > 0.9 && mode == SplineWalkerMode.Loop) //If there's a big jump in progress (going from current loop to the next)
+            lap++;
+            lengthSum += spline.SplineLength(); //total length
+            if (GameControl.instance.randomize)
             {
-                lap++;
-                lengthSum += spline.SplineLength(); //total length
-                if (GameControl.instance.randomize)
-                {
-                    randomizerScript.Randomize(true);
-                }
+                randomizerScript.Randomize(true);
             }
         }
         if (position != transform.position) //If the position is not equal to current position, move to position

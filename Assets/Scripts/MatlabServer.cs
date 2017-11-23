@@ -13,6 +13,7 @@ public class MatlabServer : MonoBehaviour {
     public static MatlabServer instance;
     public float xMove, yMove = 0;
     public float xForce, yForce = 0;
+    public float collisionStatus = 0;
     [ReadOnly] public bool serverRunning = false;
     [ReadOnly] public string ipAddress = "127.0.0.1"; //This comp: 142.244.63.45, Localhost: 127.0.0.1   
     [ReadOnly] public int port = 9000; 
@@ -114,7 +115,7 @@ public class MatlabServer : MonoBehaviour {
             //Debug.Log("X: " +  xMove + " Y: " + yMove); //Display X/Y Position
 
             //Concatenate Collision Status: True, xForce, yForce. 
-            dataSendLINQ = (BitConverter.GetBytes(1.00)).Concat(BitConverter.GetBytes((double)xForce)).Concat(BitConverter.GetBytes((double)yForce));
+            dataSendLINQ = (BitConverter.GetBytes((double)collisionStatus)).Concat(BitConverter.GetBytes((double)xForce)).Concat(BitConverter.GetBytes((double)yForce));
             dataSend = dataSendLINQ.ToArray(); //Convert to byte Array from IEnumerable byte Array
 
             //Debug.Log("X_f: " + xForce + " Y_f: " + yForce); //xForce, yForce
