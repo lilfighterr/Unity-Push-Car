@@ -686,7 +686,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spline: {fileID: 420015386}
   Car: {fileID: 1343971841}
-  trace: 0
+  showLineToggle: {fileID: 649309664}
 --- !u!224 &206690390
 RectTransform:
   m_ObjectHideFlags: 0

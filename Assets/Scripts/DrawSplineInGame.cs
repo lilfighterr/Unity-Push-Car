@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class DrawSplineInGame : MonoBehaviour {
     public GameObject spline;
     public GameObject Car;
-    public bool trace = false;
 
     private BezierSpline splineScript;
     private SplineForce carScriptForce;
@@ -16,6 +16,8 @@ public class DrawSplineInGame : MonoBehaviour {
     private int steps = 100; //# of lines to be drawn
     private int drawLine = 1;
     private bool inSettings;
+    private GameObject[] lineArray;
+    private bool drawnInitially = false;
     
     
 
@@ -37,19 +39,28 @@ public class DrawSplineInGame : MonoBehaviour {
 
         drawLine = PlayerPrefs.GetInt("ShowLineToggle", 1);
         drawDistance = PlayerPrefs.GetFloat("DrawDistance", 0.1f);
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        if (drawLine == 1)
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (!drawnInitially && drawLine == 1) //Draw line initially, filling the array
+        {
+            lineArray = new GameObject[steps];
+            DrawSpline();
+            drawnInitially = true;
+        }
+        if (drawLine == 1) //Move the lines in the array instead of creating/destroying more lines
         {
             DrawSpline();
         }
-	}
+    }
 
     public void ToggleLine(bool value) //To be used by toggle in settings
     {
         drawLine = value ? 1 : 0;
+        gameObject.SetActive(value);
     }
 
     public void ChangeDrawDistance(float value) //To be used by toggle in settings
@@ -66,27 +77,26 @@ public class DrawSplineInGame : MonoBehaviour {
 
         for (int i = 0; i < steps; i++)
         {
-            if (!trace)
+            if (!drawnInitially)
             {
-                DrawLine(splineScript.GetPoint(start), splineScript.GetPoint(next), Color.gray, drawDuration);
+                DrawLine(splineScript.GetPoint(start), splineScript.GetPoint(next), Color.gray, i);
             }
             else
             {
-                if (i % 2 == 0)
-                {
-                    DrawLine(splineScript.GetPoint(start), splineScript.GetPoint(next), Color.gray, drawDuration);
-                }
+                lineArray[i].GetComponent<LineRenderer>().SetPosition(0, splineScript.GetPoint(start));
+                lineArray[i].GetComponent<LineRenderer>().SetPosition(1, splineScript.GetPoint(next));
             }
             start = next;
             next += step;
         }
     }
 
-    private void DrawLine(Vector3 start, Vector3 end, Color color, float duration = 0.2f) //Got script from stackoverflow
+    private void DrawLine(Vector3 start, Vector3 end, Color color, int index) //Got script from stackoverflow
     {
         GameObject myLine = new GameObject();
         myLine.transform.parent = transform;
         myLine.transform.position = start;
+        myLine.name = index.ToString();
         myLine.AddComponent<LineRenderer>();
         LineRenderer lr = myLine.GetComponent<LineRenderer>();
         lr.sortingLayerName = "Foreground";
@@ -97,6 +107,6 @@ public class DrawSplineInGame : MonoBehaviour {
         lr.endWidth = 0.1f;
         lr.SetPosition(0, start);
         lr.SetPosition(1, end);
-        GameObject.Destroy(myLine, duration);
+        lineArray[index] = myLine;
     }
 }
