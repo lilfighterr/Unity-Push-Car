@@ -14,6 +14,7 @@ public class MatlabServer : MonoBehaviour {
     public float xMove, yMove = 0;
     public float xForce, yForce = 0;
     public float collisionStatus = 0;
+    public float forceFeedback = 0;
     [ReadOnly] public bool serverRunning = false;
     [ReadOnly] public string ipAddress = "127.0.0.1"; //This comp: 142.244.63.45, Localhost: 127.0.0.1   
     [ReadOnly] public int port = 9000; 
@@ -35,6 +36,7 @@ public class MatlabServer : MonoBehaviour {
             Destroy(gameObject);
         }
         ipAddress = PlayerPrefs.GetString("IPAddress", "127.0.0.1");
+        forceFeedback = (float)PlayerPrefs.GetInt("ForceToggle", 1);
     }
 
     void OnApplicationQuit()
@@ -68,14 +70,12 @@ public class MatlabServer : MonoBehaviour {
 
     private void ThreadMethod()
     {
-
         int recv;
         byte[] dataRecv = new byte[16];  //Data Received from Simulink
-        byte[] dataSend = new byte[24]; //Send Collision Status, X, Y
-        IEnumerable<byte> dataSendLINQ = new byte[24]; //Initialize LINQ for easy concatenation later for sending
-        
+        byte[] dataSend = new byte[32]; //Send Collision Status, X, Y
+        IEnumerable<byte> dataSendLINQ = new byte[32]; //Initialize LINQ for easy concatenation later for sending
         //Create IP End point, where I want to connect (Local IP/Port)
-        IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(ipAddress), port); 
+        IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(ipAddress), port);
         //Create UDP Socket
         newsock = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
         //Bind to ip. Server waits for a client at specified ip & port. 
@@ -87,7 +87,7 @@ public class MatlabServer : MonoBehaviour {
         {
             Debug.Log("Winsock Error: " + e.ToString());
         }
-        //Debug.Log("Connecting to IP: "+ ipAddress + " Port: "+ port +" Waiting for a client...");
+        Debug.Log("Connecting to IP: "+ ipAddress + " Port: "+ port +" Waiting for a client...");
 
         //Get IP of client
         IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
@@ -114,8 +114,8 @@ public class MatlabServer : MonoBehaviour {
 
             //Debug.Log("X: " +  xMove + " Y: " + yMove); //Display X/Y Position
 
-            //Concatenate Collision Status: True, xForce, yForce. 
-            dataSendLINQ = (BitConverter.GetBytes((double)collisionStatus)).Concat(BitConverter.GetBytes((double)xForce)).Concat(BitConverter.GetBytes((double)yForce));
+            //Concatenate Collision Status, ForceFeedbackStatus, xForce, yForce. 
+            dataSendLINQ = (BitConverter.GetBytes((double)collisionStatus)).Concat(BitConverter.GetBytes((double)forceFeedback)).Concat(BitConverter.GetBytes((double)xForce)).Concat(BitConverter.GetBytes((double)yForce));
             dataSend = dataSendLINQ.ToArray(); //Convert to byte Array from IEnumerable byte Array
 
             //Debug.Log("X_f: " + xForce + " Y_f: " + yForce); //xForce, yForce
@@ -127,7 +127,8 @@ public class MatlabServer : MonoBehaviour {
             {
                 break;
             }
-            //Debug.Log(data[0] + " " + data[1] + " " + data[2] + " " + data[3] + " " + data[4] + " " + data[5] + " " + data[6] + " " + data[7]); 
+
+            //Debug.Log(dataSend[0] + " " + dataSend[1] + " " + dataSend[2] + " " + dataSend[3] + " " + dataSend[4]); 
         }
         Debug.Log("Exiting Thread...");
     }
