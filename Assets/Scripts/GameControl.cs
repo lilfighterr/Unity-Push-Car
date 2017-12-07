@@ -22,6 +22,7 @@ public class GameControl : MonoBehaviour
     public bool drawLine = false;
     public bool forceFeedback = false;
     public bool gameStart = false;
+    public bool isCW = true;
     public SceneName sceneIndex;
     public int evalType = 0;
     public float blinkTimerOn = 1f;
@@ -46,6 +47,7 @@ public class GameControl : MonoBehaviour
             isRehab = PlayerPrefs.GetInt("RehabToggle", 0) == 1 ? true : false;
             randomize = PlayerPrefs.GetInt("RandomizeToggle", 1) == 1 ? true : false;
             forceFeedback = PlayerPrefs.GetInt("ForceToggle", 1) == 1 ? true : false;
+            isCW = PlayerPrefs.GetInt("DirectionToggle", 1) == 1 ? true : false;
             evalType = PlayerPrefs.GetInt("EvalType", 0);
 
             goal = (evalType == 0) ? PlayerPrefs.GetFloat("Length", 40f) : PlayerPrefs.GetFloat("Time", 30f);

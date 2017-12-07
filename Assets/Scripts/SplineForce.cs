@@ -7,7 +7,8 @@ using UnityEngine.SceneManagement;
 public class SplineForce : MonoBehaviour
 {
 
-    public BezierSpline spline;
+    public BezierSpline splineCW;
+    public BezierSpline splineCCW;
     public bool lookForward;
     public SplineWalkerMode mode;
     public GrabScript ball;
@@ -15,6 +16,7 @@ public class SplineForce : MonoBehaviour
 
     private Rigidbody2D rb2d;
     private SplineRandomizer randomizerScript;
+    private BezierSpline spline;
     private float progress = 0, prevProgress = 0, tempProgress = 0;
     private float velocity = 0;
     private float score = 0;
@@ -66,6 +68,7 @@ public class SplineForce : MonoBehaviour
 
     private void Start()
     {
+        spline = (GameControl.instance.isCW) ? splineCW : splineCCW;
         rb2d = GetComponent<Rigidbody2D>();
         rb2d.velocity = Vector2.zero;
         transform.localPosition = spline.GetPoint(0);

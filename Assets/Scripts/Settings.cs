@@ -10,6 +10,7 @@ public class Settings : MonoBehaviour {
     public GameObject slider;
     public GameObject forceToggle;
     public GameObject randomizeToggle;
+    public GameObject directionToggle;
     public GameObject rehabToggle;
     public GameObject showLineToggle;
     public GameObject evaluationType;
@@ -33,6 +34,7 @@ public class Settings : MonoBehaviour {
         isRehab = PlayerPrefs.GetInt("RehabToggle", 0) == 1 ? true : false;
         slider.GetComponent<Slider>().value = PlayerPrefs.GetFloat("DrawDistance", 0.1f);
         randomizeToggle.GetComponent<Toggle>().isOn = PlayerPrefs.GetInt("RandomizeToggle", 1) == 1 ? true : false;
+        directionToggle.GetComponent<Toggle>().isOn = PlayerPrefs.GetInt("DirectionToggle", 1) == 1 ? true : false;
         showLineToggle.GetComponent<Toggle>().isOn = PlayerPrefs.GetInt("ShowLineToggle", 1) == 1 ? true : false;
 
         forceToggle.GetComponent<Toggle>().isOn = PlayerPrefs.GetInt("ForceToggle", 1) == 1 ? true : false;
@@ -69,6 +71,12 @@ public class Settings : MonoBehaviour {
     {
         int isOn = value ? 1 : 0;
         PlayerPrefs.SetInt("RandomizeToggle", isOn);
+    }
+
+    public void DirectionToggle(bool value)
+    {
+        int isOn = value ? 1 : 0;
+        PlayerPrefs.SetInt("DirectionToggle", isOn);
     }
 
     public void ShowLineToggle(bool value)

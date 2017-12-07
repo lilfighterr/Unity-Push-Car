@@ -5,9 +5,11 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class DrawSplineInGame : MonoBehaviour {
-    public GameObject spline;
+    public GameObject splineCW;
+    public GameObject splineCCW;
     public GameObject Car;
 
+    private GameObject spline;
     private BezierSpline splineScript;
     private SplineForce carScriptForce;
     private SplineWalker carScriptWalker;
@@ -18,28 +20,28 @@ public class DrawSplineInGame : MonoBehaviour {
     private bool inSettings;
     private GameObject[] lineArray;
     private bool drawnInitially = false;
+    private SceneName sceneIndex;
     
     
 
 	// Use this for initialization
 	void Start () {
         //Grab scripts of spline & car
-        splineScript = spline.GetComponent<BezierSpline>();
-        
-        if (SceneManager.GetActiveScene().name == "Settings")
+        if ((SceneName)SceneManager.GetActiveScene().buildIndex == SceneName.Settings)
         {
+            spline = splineCW;
             carScriptWalker = Car.GetComponent<SplineWalker>();
             inSettings = true;
         }
         else
         {
+            spline = (GameControl.instance.isCW) ? splineCW : splineCCW;
             carScriptForce = Car.GetComponent<SplineForce>();
             inSettings = false;
         }
-
+        splineScript = spline.GetComponent<BezierSpline>();
         drawLine = PlayerPrefs.GetInt("ShowLineToggle", 1);
         drawDistance = PlayerPrefs.GetFloat("DrawDistance", 0.1f);
-
     }
 
     // Update is called once per frame
@@ -70,7 +72,6 @@ public class DrawSplineInGame : MonoBehaviour {
 
     private void DrawSpline()
     {
-        
         float start = (inSettings) ? carScriptWalker.GetProgress :carScriptForce.GetProgress; //Start point
         float step = drawDistance / steps; //Size of step increment
         float next = start + step; //next point to draw to
