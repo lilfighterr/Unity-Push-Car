@@ -25,8 +25,8 @@ public class GameControl : MonoBehaviour
     public bool isCW = true;
     public SceneName sceneIndex;
     public int evalType = 0;
-    public float blinkTimerOn = 1f;
-    public float blinkTimerOff = 1f;
+    public float blinkTimerOn = 2f;
+    public float blinkTimerOff = 2f;
 
     private SplineForce carScript;
     private float timeLeft = 4.5f;

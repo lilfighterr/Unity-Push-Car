@@ -2261,8 +2261,8 @@ MonoBehaviour:
   isCW: 1
   sceneIndex: 0
   evalType: 0
-  blinkTimerOn: 0.5
-  blinkTimerOff: 0.5
+  blinkTimerOn: 1
+  blinkTimerOff: 1
 --- !u!1 &1637686860
 GameObject:
   m_ObjectHideFlags: 0
