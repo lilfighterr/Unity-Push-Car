@@ -55,11 +55,11 @@ public class GrabScript : MonoBehaviour {
         {
             mousePosScreen = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePosScreen.z = 0;
-            transform.position = mousePosScreen;           
+            transform.parent.transform.position = mousePosScreen;    //just transform.position if no handle      
         }
         else if (GameControl.instance.isRehab == true && MatlabServer.instance.serverRunning == true)
         {
-            transform.position = CalibratedMovement();
+            transform.parent.transform.position = CalibratedMovement();
         }
         else
         {

@@ -216,14 +216,18 @@ MonoBehaviour:
   gameOverText: {fileID: 0}
   calibrateButton: {fileID: 0}
   car: {fileID: 802549586}
+  blinker: {fileID: 0}
   gameOver: 0
   isRehab: 1
   randomize: 0
   drawLine: 0
   forceFeedback: 0
   gameStart: 0
+  isCW: 1
   sceneIndex: 0
   evalType: 0
+  blinkTimerOn: 2
+  blinkTimerOff: 2
 --- !u!114 &497290321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,6 +243,8 @@ MonoBehaviour:
   yMove: 0
   xForce: 0
   yForce: 0
+  collisionStatus: 0
+  forceFeedback: 0
   serverRunning: 0
   ipAddress: 142.244.63.45
   port: 9000
@@ -341,6 +347,7 @@ MonoBehaviour:
   spline: {fileID: 0}
   xForce: 0
   yForce: 0
+  collisionStatus: 0
 --- !u!212 &507975225
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -391,7 +398,7 @@ Transform:
   m_GameObject: {fileID: 507975221}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
