@@ -44,16 +44,10 @@ public class Calibration : MonoBehaviour
                 case 2:
                     bR = new Vector3(MatlabServer.instance.xMove, MatlabServer.instance.yMove, 0); //record 2nd robot pos
                     bS = new Vector3(calibrationCrosshair.transform.position.x, calibrationCrosshair.transform.position.y, 0); //record 2nd screen pos
-                    calibrationCrosshair.transform.position = new Vector2(4f, 0f); //Move crosshair to 2nd pos
-                    break;
-                case 3:
-                    cR = new Vector3(MatlabServer.instance.xMove, MatlabServer.instance.yMove, 0); //record 3rd robot pos
-                    cS = new Vector3(calibrationCrosshair.transform.position.x, calibrationCrosshair.transform.position.y, 0); //record 3rd screen pos
                     calibrationCrosshair.SetActive(false);
                     Calibrate();
                     characterScript.Calibrate();
                     doneText.SetActive(true);
-
                     break;
                 default:
                     //Do nothing
@@ -74,7 +68,7 @@ public class Calibration : MonoBehaviour
 
     private void Calibrate()
     {
-        
+        /*
          float[,] screen = { {aS.x, bS.x, cS.x },
                               {aS.y, bS.y, cS.y },
                               {1, 1, 1 } };
@@ -97,7 +91,27 @@ public class Calibration : MonoBehaviour
 
         PlayerPrefs.SetFloat("T31", transformMatrix[2, 0]);
         PlayerPrefs.SetFloat("T32", transformMatrix[2, 1]);
-        PlayerPrefs.SetFloat("T33", transformMatrix[2, 2]);
+        PlayerPrefs.SetFloat("T33", transformMatrix[2, 2]);*/
+
+        // Ps = A*Pr
+        float[,] screen = { {aS.x}, 
+                        {aS.y}, 
+                        {bS.x}, 
+                        {bS.y} };
+        float[,] robot = { {aR.x, -aR.y, 1, 0 }, 
+                        {aR.y, aR.x, 0, 1 }, 
+                        {bR.x, -bR.y, 1, 0 }, 
+                        {bR.y, bR.x, 0, 1 } };
+
+
+        Matrix<float> Ps = Matrix<float>.Build.DenseOfArray(screen);
+        Matrix<float> Pr = Matrix<float>.Build.DenseOfArray(robot);
+        Matrix<float> A = Pr.Inverse() * Ps;
+
+        PlayerPrefs.SetFloat("a", A[0, 0]);
+        PlayerPrefs.SetFloat("b", A[1, 0]);
+        PlayerPrefs.SetFloat("c", A[2, 0]);
+        PlayerPrefs.SetFloat("d", A[3, 0]);
     }
 
 
