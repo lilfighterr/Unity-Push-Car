@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement; //Allows to reset the game
 using UnityEngine.UI; //To allow for declaring a new public text variable
 using MathNet.Numerics.LinearAlgebra;
+using MathNet.Numerics.LinearAlgebra.Factorization;
 
 
 
@@ -18,8 +19,8 @@ public class Calibration : MonoBehaviour
 
     private int spacePressed = 0;
     private GrabScript characterScript;
-    private Vector3 aR, bR, cR; //Robot positions
-    private Vector3 aS, bS, cS; //Screen positions
+    private Vector3 aR, bR, cR, dR; //Robot positions
+    private Vector3 aS, bS, cS, dS; //Screen positions
     
     private void Start()
     {
@@ -38,12 +39,22 @@ public class Calibration : MonoBehaviour
                 case 1:
                     aR = new Vector3(MatlabServer.instance.xMove, MatlabServer.instance.yMove, 0); //record 1st robot pos
                     aS = new Vector3(calibrationCrosshair.transform.position.x, calibrationCrosshair.transform.position.y, 0); //record 1st screen pos
-                    calibrationCrosshair.transform.position = new Vector2(0, 3f); //Move crosshair to 2nd pos
+                    calibrationCrosshair.transform.position = new Vector2(-4, 2); //Move crosshair to 2nd pos
                     instructionsText.SetActive(false);
                     break;
                 case 2:
                     bR = new Vector3(MatlabServer.instance.xMove, MatlabServer.instance.yMove, 0); //record 2nd robot pos
                     bS = new Vector3(calibrationCrosshair.transform.position.x, calibrationCrosshair.transform.position.y, 0); //record 2nd screen pos
+                    calibrationCrosshair.transform.position = new Vector2(5, 2); //Move crosshair to 3rd pos
+                    break;
+                case 3:
+                    cR = new Vector3(MatlabServer.instance.xMove, MatlabServer.instance.yMove, 0); //record 3nd robot pos
+                    cS = new Vector3(calibrationCrosshair.transform.position.x, calibrationCrosshair.transform.position.y, 0); //record 3nd screen pos
+                    calibrationCrosshair.transform.position = new Vector2(5, -2); //Move crosshair to 4th pos
+                    break;
+                case 4:
+                    dR = new Vector3(MatlabServer.instance.xMove, MatlabServer.instance.yMove, 0); //record 3nd robot pos
+                    dS = new Vector3(calibrationCrosshair.transform.position.x, calibrationCrosshair.transform.position.y, 0); //record 3nd screen pos
                     calibrationCrosshair.SetActive(false);
                     Calibrate();
                     characterScript.Calibrate();
@@ -94,6 +105,7 @@ public class Calibration : MonoBehaviour
         PlayerPrefs.SetFloat("T33", transformMatrix[2, 2]);*/
 
         // Ps = A*Pr
+        /*
         float[,] screen = { {aS.x}, 
                         {aS.y}, 
                         {bS.x}, 
@@ -112,6 +124,47 @@ public class Calibration : MonoBehaviour
         PlayerPrefs.SetFloat("b", A[1, 0]);
         PlayerPrefs.SetFloat("c", A[2, 0]);
         PlayerPrefs.SetFloat("d", A[3, 0]);
+        */
+
+        //Homography DLT method
+        
+        Matrix<float> point1 = Matrix<float>.Build.DenseOfArray(CreateCorrespondencePointsForH(aR, aS));
+        Matrix<float> point2 = Matrix<float>.Build.DenseOfArray(CreateCorrespondencePointsForH(bR, bS));
+        Matrix<float> point3 = Matrix<float>.Build.DenseOfArray(CreateCorrespondencePointsForH(cR, cS));
+        Matrix<float> point4 = Matrix<float>.Build.DenseOfArray(CreateCorrespondencePointsForH(dR, dS));
+        
+        /*Matrix<float> point1 = Matrix<float>.Build.DenseOfArray(CreateCorrespondencePointsForH(new Vector3(141.5360f, 175.3260f, 0), new Vector3(0,0,0)));
+        Matrix<float> point2 = Matrix<float>.Build.DenseOfArray(CreateCorrespondencePointsForH(new Vector3(293.248f, 142.6483f, 0), new Vector3(990, 0,0)));
+        Matrix<float> point3 = Matrix<float>.Build.DenseOfArray(CreateCorrespondencePointsForH(new Vector3(295.4956f, 219.9856f, 0), new Vector3(990, 400,0)));
+        Matrix<float> point4 = Matrix<float>.Build.DenseOfArray(CreateCorrespondencePointsForH(new Vector3(144.9074f, 261.3775f, 0), new Vector3(0, 400,0)));*/
+        Matrix<float> combinedPoints = point1.Stack(point2).Stack(point3).Stack(point4);
+        Svd<float> svd = combinedPoints.Svd();
+        Matrix<float> Vmatrix = -svd.VT.Transpose();
+
+        /*float[,] Hmatrix = { { Vmatrix[0, 8], Vmatrix[1, 8], Vmatrix[2, 8] },
+                            { Vmatrix[3, 8], Vmatrix[4, 8], Vmatrix[5, 8]},
+                            { Vmatrix[6, 8], Vmatrix[7, 8], Vmatrix[8, 8]} };*/
+
+        PlayerPrefs.SetFloat("T11", Vmatrix[0, 8]);
+        PlayerPrefs.SetFloat("T12", Vmatrix[1, 8]);
+        PlayerPrefs.SetFloat("T13", Vmatrix[2, 8]);
+
+        PlayerPrefs.SetFloat("T21", Vmatrix[3, 8]);
+        PlayerPrefs.SetFloat("T22", Vmatrix[4, 8]);
+        PlayerPrefs.SetFloat("T23", Vmatrix[5, 8]);
+
+        PlayerPrefs.SetFloat("T31", Vmatrix[6, 8]);
+        PlayerPrefs.SetFloat("T32", Vmatrix[7, 8]);
+        PlayerPrefs.SetFloat("T33", Vmatrix[8, 8]);
+
+
+    }
+
+    private float[,] CreateCorrespondencePointsForH(Vector3 robotPoint, Vector3 screenPoint)
+    {
+        float[,] pointHomography = { {-robotPoint.x, -robotPoint.y, -1, 0, 0, 0, robotPoint.x*screenPoint.x, robotPoint.y*screenPoint.x, screenPoint.x },
+                                        {0, 0, 0, -robotPoint.x, -robotPoint.y, -1, robotPoint.x*screenPoint.y, robotPoint.y*screenPoint.y, screenPoint.y} };
+        return pointHomography;
     }
 
 
