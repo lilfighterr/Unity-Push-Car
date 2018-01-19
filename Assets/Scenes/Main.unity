@@ -2394,7 +2394,7 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1664626157}
-  m_BodyType: 2
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -2433,6 +2433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 659629c9fe44fd346b36d2ef79761a15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  acceleration: {x: 0, y: 0, z: 0}
   velocity: {x: 0, y: 0, z: 0}
   speed: {x: 0, y: 0, z: 0}
   car: {fileID: 936134541}
@@ -2655,6 +2656,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 659629c9fe44fd346b36d2ef79761a15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  acceleration: {x: 0, y: 0, z: 0}
   velocity: {x: 0, y: 0, z: 0}
   speed: {x: 0, y: 0, z: 0}
   car: {fileID: 936134541}

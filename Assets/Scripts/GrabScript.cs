@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class GrabScript : MonoBehaviour {
 
+    public Vector3 acceleration;
     public Vector3 velocity;
     public Vector3 speed;
     public GameObject car;
@@ -13,7 +14,9 @@ public class GrabScript : MonoBehaviour {
     public float collisionStatus;
 
     private Vector3 mousePosScreen, currentPos, previousPos;
+    private Vector2 previousVel;
     private Rigidbody2D carRb2d;
+    private Rigidbody2D characterRb2d;
     private Vector3 robotPos;
     private float T11 = 1, T12 = 0, T13 = 1, T21 = 0, T22 = 1, T23 = 1, T31 = 1, T32 = 1, T33 = 1;
     private float a = 0, b = 0, c = 0, d = 0;
@@ -23,9 +26,11 @@ public class GrabScript : MonoBehaviour {
     private void Start()
     {
         Calibrate();
-        previousPos = transform.position;
         carRb2d = car.GetComponent<Rigidbody2D>();
+        characterRb2d = GetComponent<Rigidbody2D>();
         robotPos = Vector3.zero;
+        previousPos = transform.position;
+        previousVel = characterRb2d.velocity;
         forceFeedback = GameControl.instance.forceFeedback;
         characterTransform = (GameControl.instance.handleToggle) ? transform.parent.transform : transform; //Get parent transform if handle on. If not, get object transform
     }
@@ -63,7 +68,8 @@ public class GrabScript : MonoBehaviour {
         {
             mousePosScreen = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePosScreen.z = 0;
-            characterTransform.position = mousePosScreen;    //just transform.position if no handle      
+            characterRb2d.velocity = (mousePosScreen - characterTransform.position)*30;
+                //((characterTransform.right * mousePosScreen.x) + (characterTransform.forward * mousePosScreen.y))/ Time.deltaTime;  //just transform.position if no handle   
         }
         else if (GameControl.instance.isRehab == true && MatlabServer.instance.serverRunning == true) //If connected to rehab robot
         {
@@ -74,9 +80,11 @@ public class GrabScript : MonoBehaviour {
             //Do Nothing
         }
         velocity = (transform.position - previousPos) / Time.deltaTime;
+        acceleration = (characterRb2d.velocity - previousVel) / Time.deltaTime;
         speed = new Vector3(Mathf.Abs(velocity.x), Mathf.Abs(velocity.y), 0);
 
         previousPos = transform.position;
+        previousVel = characterRb2d.velocity;
         if (Input.GetMouseButtonDown(1))
         {
             Vector3 onLine = spline.OnLine(transform.position);
@@ -91,6 +99,16 @@ public class GrabScript : MonoBehaviour {
             Debug.Log(spline.SplineLength());
         }
 	}
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Vector3 contactNormal = collision.contacts[0].normal.normalized; //Gives unit vector direction normal to point of contact
+        xForce = contactNormal.x * carRb2d.mass; //Force experienced by player from contact (z axis)
+        yForce = contactNormal.y * carRb2d.mass; //Force experienced by player from contact (x axis)
+
+
+        Debug.Log("x: " +xForce + " y: "+ yForce + " Vel: "+ velocity + " UnityVel: "+characterRb2d.velocity+" Accel: " + acceleration);
+    }
 
     private void OnCollisionStay2D(Collision2D collision)
     {
