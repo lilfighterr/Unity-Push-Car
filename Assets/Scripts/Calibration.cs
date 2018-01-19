@@ -24,7 +24,7 @@ public class Calibration : MonoBehaviour
     
     private void Start()
     {
-        calibrationCrosshair.transform.position = new Vector3(-4f, -2f, 0);
+        calibrationCrosshair.transform.position = new Vector3(-7f, -2f, 0);
         characterScript = characterObject.GetComponent<GrabScript>();
     }
 
@@ -39,18 +39,18 @@ public class Calibration : MonoBehaviour
                 case 1:
                     aR = new Vector3(MatlabServer.instance.xMove, MatlabServer.instance.yMove, 0); //record 1st robot pos
                     aS = new Vector3(calibrationCrosshair.transform.position.x, calibrationCrosshair.transform.position.y, 0); //record 1st screen pos
-                    calibrationCrosshair.transform.position = new Vector2(-4, 2); //Move crosshair to 2nd pos
+                    calibrationCrosshair.transform.position = new Vector2(-7, 2); //Move crosshair to 2nd pos
                     instructionsText.SetActive(false);
                     break;
                 case 2:
                     bR = new Vector3(MatlabServer.instance.xMove, MatlabServer.instance.yMove, 0); //record 2nd robot pos
                     bS = new Vector3(calibrationCrosshair.transform.position.x, calibrationCrosshair.transform.position.y, 0); //record 2nd screen pos
-                    calibrationCrosshair.transform.position = new Vector2(5, 2); //Move crosshair to 3rd pos
+                    calibrationCrosshair.transform.position = new Vector2(7f, 2); //Move crosshair to 3rd pos
                     break;
                 case 3:
                     cR = new Vector3(MatlabServer.instance.xMove, MatlabServer.instance.yMove, 0); //record 3nd robot pos
                     cS = new Vector3(calibrationCrosshair.transform.position.x, calibrationCrosshair.transform.position.y, 0); //record 3nd screen pos
-                    calibrationCrosshair.transform.position = new Vector2(5, -2); //Move crosshair to 4th pos
+                    calibrationCrosshair.transform.position = new Vector2(7, -2); //Move crosshair to 4th pos
                     break;
                 case 4:
                     dR = new Vector3(MatlabServer.instance.xMove, MatlabServer.instance.yMove, 0); //record 3nd robot pos
@@ -141,9 +141,9 @@ public class Calibration : MonoBehaviour
         Svd<float> svd = combinedPoints.Svd();
         Matrix<float> Vmatrix = -svd.VT.Transpose();
 
-        /*float[,] Hmatrix = { { Vmatrix[0, 8], Vmatrix[1, 8], Vmatrix[2, 8] },
+        float[,] Hmatrix = { { Vmatrix[0, 8], Vmatrix[1, 8], Vmatrix[2, 8] },
                             { Vmatrix[3, 8], Vmatrix[4, 8], Vmatrix[5, 8]},
-                            { Vmatrix[6, 8], Vmatrix[7, 8], Vmatrix[8, 8]} };*/
+                            { Vmatrix[6, 8], Vmatrix[7, 8], Vmatrix[8, 8]} };
 
         PlayerPrefs.SetFloat("T11", Vmatrix[0, 8]);
         PlayerPrefs.SetFloat("T12", Vmatrix[1, 8]);

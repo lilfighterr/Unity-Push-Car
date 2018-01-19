@@ -18,6 +18,7 @@ public class GrabScript : MonoBehaviour {
     private float T11 = 1, T12 = 0, T13 = 1, T21 = 0, T22 = 1, T23 = 1, T31 = 1, T32 = 1, T33 = 1;
     private float a = 0, b = 0, c = 0, d = 0;
     private bool forceFeedback;
+    private Transform characterTransform;
 
     private void Start()
     {
@@ -26,6 +27,7 @@ public class GrabScript : MonoBehaviour {
         carRb2d = car.GetComponent<Rigidbody2D>();
         robotPos = Vector3.zero;
         forceFeedback = GameControl.instance.forceFeedback;
+        characterTransform = (GameControl.instance.handleToggle) ? transform.parent.transform : transform; //Get parent transform if handle on. If not, get object transform
     }
 
     public void Calibrate() //Initialize
@@ -57,15 +59,15 @@ public class GrabScript : MonoBehaviour {
 
     // Update is called once per frame
     void FixedUpdate () {
-		if (Input.GetMouseButton(0) && GameControl.instance.isRehab == false)
+		if (Input.GetMouseButton(0) && GameControl.instance.isRehab == false) //If using mouse to move 
         {
             mousePosScreen = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePosScreen.z = 0;
-            transform.parent.transform.position = mousePosScreen;    //just transform.position if no handle      
+            characterTransform.position = mousePosScreen;    //just transform.position if no handle      
         }
-        else if (GameControl.instance.isRehab == true && MatlabServer.instance.serverRunning == true)
+        else if (GameControl.instance.isRehab == true && MatlabServer.instance.serverRunning == true) //If connected to rehab robot
         {
-            transform.parent.transform.position = CalibratedMovement();
+            characterTransform.position = CalibratedMovement();
         }
         else
         {
@@ -124,10 +126,12 @@ public class GrabScript : MonoBehaviour {
         // Ps = T*Pr
         float xS = MatlabServer.instance.xMove * T11 + MatlabServer.instance.yMove * T12;
         float yS = MatlabServer.instance.xMove * T21 + MatlabServer.instance.yMove * T22;
+        float lambda = MatlabServer.instance.xMove * T31 + MatlabServer.instance.yMove * T32 + T33;
+
         /*
         float xS = MatlabServer.instance.xMove * a - MatlabServer.instance.yMove * b + c;
         float yS = MatlabServer.instance.xMove * b + MatlabServer.instance.yMove * a + d;
         */
-        return new Vector3(xS, yS, 0f);
+        return new Vector3(xS/lambda, yS/lambda, 0f);
     }
 }

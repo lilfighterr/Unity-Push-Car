@@ -15,6 +15,8 @@ public class GameControl : MonoBehaviour
     public Text gameOverText;
     public GameObject calibrateButton;
     public GameObject car;
+    public GameObject handleOffset;
+    public GameObject characterController;
     public SpriteRenderer blinker;
     public bool gameOver = false;
     public bool isRehab = false;
@@ -23,6 +25,7 @@ public class GameControl : MonoBehaviour
     public bool forceFeedback = false;
     public bool gameStart = false;
     public bool isCW = true;
+    public bool handleToggle = false;
     public SceneName sceneIndex;
     public int evalType = 0;
     public float blinkTimerOn = 2f;
@@ -48,10 +51,11 @@ public class GameControl : MonoBehaviour
             randomize = PlayerPrefs.GetInt("RandomizeToggle", 1) == 1 ? true : false;
             forceFeedback = PlayerPrefs.GetInt("ForceToggle", 1) == 1 ? true : false;
             isCW = PlayerPrefs.GetInt("DirectionToggle", 1) == 1 ? true : false;
+            handleToggle = PlayerPrefs.GetInt("HandleToggle", 1) == 1 ? true : false;
             evalType = PlayerPrefs.GetInt("EvalType", 0);
-
+            DetermineCharacter();
             goal = (evalType == 0) ? PlayerPrefs.GetFloat("Length", 40f) : PlayerPrefs.GetFloat("Time", 30f);
-            if (sceneIndex == SceneName.Main) calibrateButton.SetActive(isRehab);
+            if (sceneIndex == SceneName.Main) calibrateButton.SetActive(isRehab); //If main game, turn on blinker
             blinkerTime = blinkTimerOn;
         }
         else if (instance != this) //If the game object finds that instance is already on another game object, then this destroys itself as it's not needed
@@ -162,6 +166,20 @@ public class GameControl : MonoBehaviour
         carScript.SetCurrentPosition(carScript.GetCurrentPosition); //Stop it at current position
         car.GetComponent<Rigidbody2D>().velocity = Vector2.zero; //Remove any velocity
         gameOverText.enabled = true;
+    }
+
+    private void DetermineCharacter()
+    {
+        if (handleToggle)
+        {
+            handleOffset.SetActive(true);
+            characterController.SetActive(false);
+        }
+        else
+        {
+            handleOffset.SetActive(false);
+            characterController.SetActive(true);
+        }
     }
 
 }
