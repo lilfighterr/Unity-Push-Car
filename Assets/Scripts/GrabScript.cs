@@ -68,12 +68,12 @@ public class GrabScript : MonoBehaviour {
         {
             mousePosScreen = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePosScreen.z = 0;
-            characterRb2d.velocity = (mousePosScreen - characterTransform.position)*30;
-                //((characterTransform.right * mousePosScreen.x) + (characterTransform.forward * mousePosScreen.y))/ Time.deltaTime;  //just transform.position if no handle   
+            characterRb2d.velocity = (mousePosScreen - characterTransform.position)*30;  
         }
         else if (GameControl.instance.isRehab == true && MatlabServer.instance.serverRunning == true) //If connected to rehab robot
         {
             characterTransform.position = CalibratedMovement();
+            //characterRb2d.velocity = (CalibratedMovement() - characterTransform.position) * 30;
         }
         else
         {
@@ -107,7 +107,7 @@ public class GrabScript : MonoBehaviour {
         yForce = contactNormal.y * carRb2d.mass; //Force experienced by player from contact (x axis)
 
 
-        Debug.Log("x: " +xForce + " y: "+ yForce + " Vel: "+ velocity + " UnityVel: "+characterRb2d.velocity+" Accel: " + acceleration);
+        //Debug.Log("x: " +xForce + " y: "+ yForce + " Vel: "+ velocity + " UnityVel: "+characterRb2d.velocity+" Accel: " + acceleration);
     }
 
     private void OnCollisionStay2D(Collision2D collision)

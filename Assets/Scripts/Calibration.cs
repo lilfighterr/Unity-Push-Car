@@ -21,10 +21,20 @@ public class Calibration : MonoBehaviour
     private GrabScript characterScript;
     private Vector3 aR, bR, cR, dR; //Robot positions
     private Vector3 aS, bS, cS, dS; //Screen positions
+    private Vector2 firstPos = new Vector2(-7, -2);
+    private Vector2 secondPos = new Vector2(-7, 2);
+    private Vector2 thirdPos = new Vector2(7, 2);
+    private Vector2 fourthPos = new Vector2(7, -2);
+    private Vector2 offset = new Vector3(0f, 2.2f);
+
     
     private void Start()
     {
-        calibrationCrosshair.transform.position = new Vector3(-7f, -2f, 0);
+        firstPos = (GameControl.instance.handleToggle) ? firstPos + offset : firstPos;
+        secondPos = (GameControl.instance.handleToggle) ? secondPos + offset : secondPos;
+        thirdPos = (GameControl.instance.handleToggle) ? thirdPos + offset : thirdPos;
+        fourthPos = (GameControl.instance.handleToggle) ? fourthPos + offset : fourthPos;
+        calibrationCrosshair.transform.position = firstPos;
         characterScript = characterObject.GetComponent<GrabScript>();
     }
 
@@ -39,18 +49,18 @@ public class Calibration : MonoBehaviour
                 case 1:
                     aR = new Vector3(MatlabServer.instance.xMove, MatlabServer.instance.yMove, 0); //record 1st robot pos
                     aS = new Vector3(calibrationCrosshair.transform.position.x, calibrationCrosshair.transform.position.y, 0); //record 1st screen pos
-                    calibrationCrosshair.transform.position = new Vector2(-7, 2); //Move crosshair to 2nd pos
+                    calibrationCrosshair.transform.position = secondPos; //Move crosshair to 2nd pos
                     instructionsText.SetActive(false);
                     break;
                 case 2:
                     bR = new Vector3(MatlabServer.instance.xMove, MatlabServer.instance.yMove, 0); //record 2nd robot pos
                     bS = new Vector3(calibrationCrosshair.transform.position.x, calibrationCrosshair.transform.position.y, 0); //record 2nd screen pos
-                    calibrationCrosshair.transform.position = new Vector2(7f, 2); //Move crosshair to 3rd pos
+                    calibrationCrosshair.transform.position = thirdPos; //Move crosshair to 3rd pos
                     break;
                 case 3:
                     cR = new Vector3(MatlabServer.instance.xMove, MatlabServer.instance.yMove, 0); //record 3nd robot pos
                     cS = new Vector3(calibrationCrosshair.transform.position.x, calibrationCrosshair.transform.position.y, 0); //record 3nd screen pos
-                    calibrationCrosshair.transform.position = new Vector2(7, -2); //Move crosshair to 4th pos
+                    calibrationCrosshair.transform.position = fourthPos; //Move crosshair to 4th pos
                     break;
                 case 4:
                     dR = new Vector3(MatlabServer.instance.xMove, MatlabServer.instance.yMove, 0); //record 3nd robot pos

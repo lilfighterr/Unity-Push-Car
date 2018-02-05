@@ -115,11 +115,12 @@ public class SplineForce : MonoBehaviour
 
         //Vector3 projection = dotProduct*spline.GetDirection(progress);
 
-        //Vector3 force = ball.speed.magnitude*spline.GetDirection(progress)*dotProduct;
-        Vector3 force = Vector3.Dot(ball.velocity, spline.GetDirection(progress))*spline.GetDirection(progress);
+
+
+        //Vector3 force = Vector3.Dot(ball.velocity, spline.GetDirection(progress))*spline.GetDirection(progress);
 
         //Debug.Log("direction: "+spline.GetDirection(progress)*dotProduct+"Force: "+force);
-        rb2d.AddForce(force, ForceMode2D.Force);
+        //rb2d.AddForce(force, ForceMode2D.Force);
 
         //Debug.DrawRay(spline.GetPoint(progress), projection, Color.blue, 2, true);
 
