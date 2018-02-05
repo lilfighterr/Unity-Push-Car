@@ -21,7 +21,7 @@ public class SplineRandomizer : MonoBehaviour {
             //pointList.Remove(randomNum);
             if (pointCounter == 0)
             {
-                if (keepStartSame && (i == 0 || i == 24))
+                if (keepStartSame && (i == 0 || i == 24)) // If keep start same and point is the first or last
                 {
                     if (i == 24)
                     {
