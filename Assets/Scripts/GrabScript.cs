@@ -98,7 +98,7 @@ public class GrabScript : MonoBehaviour {
             }
             Debug.Log(spline.SplineLength());
         }
-	}
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {

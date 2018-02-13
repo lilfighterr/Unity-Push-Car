@@ -22,7 +22,7 @@ public class SplineForce : MonoBehaviour
     private float score = 0;
     private float lengthSum = 0;
     private bool goingForward = true;
-    private int lap = 0;
+    public int lap = 0;
     private Vector3 currentPosition;
     private bool goingBackwards = false;
 
@@ -64,6 +64,14 @@ public class SplineForce : MonoBehaviour
     public void ResetScore()
     {
         lengthSum = 0;
+    }
+
+    public float GetLap
+    {
+        get
+        {
+            return lap;
+        }
     }
 
     private void Start()

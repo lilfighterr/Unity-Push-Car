@@ -83,10 +83,11 @@ public class GameControl : MonoBehaviour
             {
                 timeLeft -= Time.deltaTime;
                 viewedTime = timeLeft - 1;
-                if (viewedTime < -1)
+                if (viewedTime < -1) //Start of game
                 {
                     gameStart = true;
                     countdownText.enabled = false;
+                    SaveToExcel.instance.parameters.Add(forceFeedback ? 1:0);
                 }
                 else if (viewedTime > 0.5)
                 {
@@ -112,6 +113,12 @@ public class GameControl : MonoBehaviour
                     blinkerTime = blinkTimerOn;
                 }
                 timeElapsed += Time.deltaTime; //For time score
+                SaveToExcel.instance.timeElapsed.Add(timeElapsed);
+                SaveToExcel.instance.characterPositionX.Add(characterController.transform.position.x);
+                SaveToExcel.instance.characterPositionY.Add(characterController.transform.position.y);
+                SaveToExcel.instance.carPositionX.Add(car.transform.position.x);
+                SaveToExcel.instance.carPositionY.Add(car.transform.position.y);
+                SaveToExcel.instance.lap.Add(car.GetComponent<SplineForce>().GetLap);
                 timeText.text = "Time \n" + timeElapsed.ToString("F1");
             }
 
@@ -163,6 +170,7 @@ public class GameControl : MonoBehaviour
     private void GameOver()
     {
         gameOver = true;
+        gameStart = false;
         carScript.SetCurrentPosition(carScript.GetCurrentPosition); //Stop it at current position
         car.GetComponent<Rigidbody2D>().velocity = Vector2.zero; //Remove any velocity
         gameOverText.enabled = true;
